@@ -26,7 +26,7 @@
 import {define} from "./_observablehq/client.c0ee8b8c.js";
 import {registerFile} from "./_observablehq/stdlib.97c14579.js";
 
-registerFile("./data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"./data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"./_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736433445748,"size":1549219});
+registerFile("./data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"./data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"./_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736437439803,"size":1549219});
 
 define({id: "7ea70af3", outputs: ["govuk_colour_palette"], body: () => {
 // const stringToCodeMap = {
@@ -41,8 +41,9 @@ const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D
 return {govuk_colour_palette};
 }});
 
-define({id: "0e13bf5f", inputs: ["FileAttachment"], outputs: ["tradeTotals"], body: async (FileAttachment) => {
+define({id: "343cb5c3", inputs: ["FileAttachment"], outputs: ["tradeTotals","spainTotals"], body: async (FileAttachment) => {
 const tradeTotals = await FileAttachment("./data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
+const spainTotals = await tradeTotals.filter(row => row['ISO2'] === 'ES' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
 
 // const balanceHistory = await FileAttachment("./data/quota-balance-history.json")
 //   .json({typed: true})
@@ -67,7 +68,7 @@ const tradeTotals = await FileAttachment("./data/uk-total-trade-all-countries-se
 //   })));
 // const currentOpenCriticalVolumes = currentVolumes
 //   .then(data => data.filter(row => ['Open', 'Critical'].includes(row.quota_definition__status)));
-return {tradeTotals};
+return {tradeTotals,spainTotals};
 }});
 
 define({id: "b09ac75f", body: () => {
@@ -161,9 +162,23 @@ define({id: "e03df9e4", body: () => {
 // }
 }});
 
-define({id: "99ca8759", mode: "inline", inputs: ["Inputs","tradeTotals","display"], body: async (Inputs,tradeTotals,display) => {
+define({id: "b1d46177", mode: "inline", inputs: ["Inputs","spainTotals","display"], body: async (Inputs,spainTotals,display) => {
 display(await(
-Inputs.table(tradeTotals)
+Inputs.table(spainTotals, {
+          columns: [
+            'Year',
+            'flow',
+            'Million',
+          ],
+          header: {
+            flow: "Flow",
+            Million: "Value (£ Million)",
+          },
+          format: {
+            Year: x => x,
+            flow: x => x,
+          },
+        })
 ))
 }});
 
@@ -196,7 +211,7 @@ Inputs.table(tradeTotals)
 <!-- Constants -->
 <div class="observablehq observablehq--block"><!--:7ea70af3:--></div>
 <!-- Data -->
-<div class="observablehq observablehq--block"><!--:0e13bf5f:--></div>
+<div class="observablehq observablehq--block"><!--:343cb5c3:--></div>
 <!-- Input widgets -->
 <div class="observablehq observablehq--block"><!--:b09ac75f:--></div>
 <!-- Charts -->
@@ -221,8 +236,8 @@ Inputs.table(tradeTotals)
   <div class="govuk-grid-row govuk-!-margin-bottom-4">
     <div class="govuk-grid-column-full">
       <div class="card">
-        <h2><span class="govuk-heading-s">Full data table</span></h2>
-        <observablehq-loading></observablehq-loading><!--:99ca8759:-->
+        <h2><span class="govuk-heading-s">Data table</span></h2>
+        <observablehq-loading></observablehq-loading><!--:b1d46177:-->
       </div>
     </div>
   </div>
@@ -232,7 +247,7 @@ Inputs.table(tradeTotals)
 <footer id="observablehq-footer">
 <div>
 <div class="govuk-width-container">
-  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Thursday 9 January 2025 at 14:37:22 GMT.</p>
+  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Thursday 9 January 2025 at 15:43:56 GMT.</p>
 </div>
 <div class="govuk-footer">
   <div class="govuk-width-container">
