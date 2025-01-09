@@ -36,6 +36,8 @@ const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D
 
 <!-- Data -->
 ```js
+const tradeTotals = await FileAttachment("./data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
+
 // const balanceHistory = await FileAttachment("./data/quota-balance-history.json")
 //   .json({typed: true})
 //   .then(data => data.map(row => ({
@@ -158,7 +160,7 @@ const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l govuk-!-margin-top-7">Trade with Spain, in current prices (ONS)</h1>
   <!-- -->
-  <div class="govuk-grid-row  govuk-!-margin-bottom-4">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
       <div class="card" style="min-height: 400px">
         <h2><span class="govuk-heading-s">UK trade with Spain</span></h2>
@@ -169,7 +171,15 @@ const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D
         <h2><span class="govuk-heading-s">UK trade balance with Spain</span></h2>
       </div>
     </div>
+  </div>
   <!-- -->
+  <div class="govuk-grid-row govuk-!-margin-bottom-4">
+    <div class="govuk-grid-column-full">
+      <div class="card">
+        <h2><span class="govuk-heading-s">Full data table</span></h2>
+        ${Inputs.table(tradeTotals)}
+      </div>
+    </div>
   </div>
 <!-- Closes .govuk-width-container -->
 </div>

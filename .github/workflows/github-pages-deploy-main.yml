@@ -14,7 +14,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install dependencies
-        run: npm ci
+        run: |
+          sudo apt install r-base libfontconfig1-dev libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+          sudo Rscript -e 'options(warn = 2); install.packages(c("tidyverse", "RCurl", "XML"), repos="https://cran.ma.imperial.ac.uk/")'
+          npm ci
       - name: Build
         run: npm run build
       - name: Make sure to not run Jekyll
