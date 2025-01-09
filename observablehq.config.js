@@ -51,7 +51,7 @@ export default {
 </div></div>`,
   footer: `
 <div class="govuk-width-container">
-  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.data.gov.uk/dataset/4a478c7e-16c7-4c28-ab9b-967bb79342e9/uk-trade-quotas" target="_self">"UK trade quotas" published on data.gov.uk</a> as of ${new Date().toLocaleString(
+  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS).</a> as of ${new Date().toLocaleString(
     "en-GB",
     { dateStyle: "full", timeStyle: "long", timeZone: "Europe/London" }
   )}</p>
