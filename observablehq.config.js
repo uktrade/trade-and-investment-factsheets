@@ -51,10 +51,10 @@ export default {
 </div></div>`,
   footer: `
 <div class="govuk-width-container">
-  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS).</a> as of ${new Date().toLocaleString(
+  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of ${new Date().toLocaleString(
     "en-GB",
     { dateStyle: "full", timeStyle: "long", timeZone: "Europe/London" }
-  )}</p>
+  )}.</p>
 </div>
 <div class="govuk-footer">
   <div class="govuk-width-container">
