@@ -1,6 +1,6 @@
-# Trade and Investment Factsheets Prototype
+# Trade and investment factsheets
 
-This repository contains the source code for the <a href="https://trade-and-investment-factsheets.docs.trade.gov.uk/">Trade and Investment Factsheets Prototype</a>.
+This repository contains the source code for <a href="https://trade-and-investment-factsheets.docs.trade.gov.uk/">Trade and investment factsheets</a>.
 
 > [!IMPORTANT]  
 > This is prototype for testing purposes only. It exists to experiment with using the [Observable Framework](https://observablehq.com/framework) to publish dashboards of public data.
