@@ -39,6 +39,25 @@ const spainTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['
 
 <!-- Charts -->
 ```js
+function trade(data) {
+  return Plot.plot({
+    subtitle: "",
+    style: "font-size: 14px;",
+    marginBottom: 40,
+    marginTop: 30,
+    x: {label: null, tickRotate: -45, type: "band"},
+    y: {label: "£ Billion", grid: true},
+    marks: [
+      Plot.gridY(),
+      Plot.line(data, {
+        y: d => d['Million'] / 1000.0,
+        x: d => '' + d['Year'],
+        z: d => d['flow'],
+      }),
+    ]
+  })
+};
+
 function tradeBalance(data) {
   return Plot.plot({
     subtitle: "",
@@ -65,12 +84,13 @@ function tradeBalance(data) {
   <!-- -->
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <div class="card" style="min-height: 400px">
+      <div class="card">
         <h2><span class="govuk-heading-s">UK trade with Spain</span></h2>
+        ${trade(spainTotals)}
       </div>
     </div>
     <div class="govuk-grid-column-one-half">
-      <div class="card" style="min-height: 400px">
+      <div class="card">
         <h2><span class="govuk-heading-s">UK trade balance with Spain</span></h2>
         ${tradeBalance(spainTotals)}
       </div>
