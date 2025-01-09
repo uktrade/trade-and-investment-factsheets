@@ -37,6 +37,7 @@ const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D
 <!-- Data -->
 ```js
 const tradeTotals = await FileAttachment("./data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
+const spainTotals = await tradeTotals.filter(row => row['ISO2'] === 'ES' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
 
 // const balanceHistory = await FileAttachment("./data/quota-balance-history.json")
 //   .json({typed: true})
@@ -176,8 +177,22 @@ const tradeTotals = await FileAttachment("./data/uk-total-trade-all-countries-se
   <div class="govuk-grid-row govuk-!-margin-bottom-4">
     <div class="govuk-grid-column-full">
       <div class="card">
-        <h2><span class="govuk-heading-s">Full data table</span></h2>
-        ${Inputs.table(tradeTotals)}
+        <h2><span class="govuk-heading-s">Data table</span></h2>
+        ${Inputs.table(spainTotals, {
+          columns: [
+            'Year',
+            'flow',
+            'Million',
+          ],
+          header: {
+            flow: "Flow",
+            Million: "Value (£ Million)",
+          },
+          format: {
+            Year: x => x,
+            flow: x => x,
+          },
+        })}
       </div>
     </div>
   </div>
