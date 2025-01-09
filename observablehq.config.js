@@ -45,7 +45,7 @@ export default {
     Prototype
   </strong>
   <span class="govuk-phase-banner__text">
-    This is a prototype for testing purposes only. Help us improve it and <a class="govuk-link govuk-link--no-visited-state" href="https://github.com/uktrade/uk-trade-quotas-dashboard/discussions" target="_self">give your feedback on GitHub discussions</a>.
+    This is a prototype for testing purposes only. Help us improve it and <a class="govuk-link govuk-link--no-visited-state" href="https://github.com/uktrade/trade-and-investment-factsheets/discussions" target="_self">give your feedback on GitHub discussions</a>.
   </span>
 </p>
 </div></div>`,
