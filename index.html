@@ -6,18 +6,27 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="preload" as="style" href="./_observablehq/theme-air.c3bd821c.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.ea9fd553.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="./_observablehq/theme-air.c3bd821c.css">
-<link rel="modulepreload" href="./_observablehq/client.ee0adf51.js">
-<link rel="modulepreload" href="./_observablehq/runtime.05f22c11.js">
-<link rel="modulepreload" href="./_observablehq/stdlib.bc35675b.js">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
+<link rel="modulepreload" href="./_observablehq/client.c0ee8b8c.js">
+<link rel="modulepreload" href="./_observablehq/runtime.79fe2d2b.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.97c14579.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.511c8117.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
 
     <link rel="stylesheet" href="./_npm/govuk-frontend@5.4.0/dist/govuk/govuk-frontend.min.css">
     <link rel="stylesheet" href="./_file/style.f9386e3a.css">
   
 <script type="module">
 
-import {define} from "./_observablehq/client.ee0adf51.js";
+import {define} from "./_observablehq/client.c0ee8b8c.js";
+import {registerFile} from "./_observablehq/stdlib.97c14579.js";
+
+registerFile("./data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"./data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"./_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736432637117,"size":1549219});
 
 define({id: "7ea70af3", outputs: ["govuk_colour_palette"], body: () => {
 // const stringToCodeMap = {
@@ -32,7 +41,9 @@ const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D
 return {govuk_colour_palette};
 }});
 
-define({id: "0d04120f", body: () => {
+define({id: "0e13bf5f", inputs: ["FileAttachment"], outputs: ["tradeTotals"], body: async (FileAttachment) => {
+const tradeTotals = await FileAttachment("./data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
+
 // const balanceHistory = await FileAttachment("./data/quota-balance-history.json")
 //   .json({typed: true})
 //   .then(data => data.map(row => ({
@@ -56,6 +67,7 @@ define({id: "0d04120f", body: () => {
 //   })));
 // const currentOpenCriticalVolumes = currentVolumes
 //   .then(data => data.filter(row => ['Open', 'Critical'].includes(row.quota_definition__status)));
+return {tradeTotals};
 }});
 
 define({id: "b09ac75f", body: () => {
@@ -149,6 +161,12 @@ define({id: "e03df9e4", body: () => {
 // }
 }});
 
+define({id: "99ca8759", mode: "inline", inputs: ["Inputs","tradeTotals","display"], body: async (Inputs,tradeTotals,display) => {
+display(await(
+Inputs.table(tradeTotals)
+))
+}});
+
 </script>
 <div id="observablehq-center">
 <header id="observablehq-header">
@@ -178,7 +196,7 @@ define({id: "e03df9e4", body: () => {
 <!-- Constants -->
 <div class="observablehq observablehq--block"><!--:7ea70af3:--></div>
 <!-- Data -->
-<div class="observablehq observablehq--block"><!--:0d04120f:--></div>
+<div class="observablehq observablehq--block"><!--:0e13bf5f:--></div>
 <!-- Input widgets -->
 <div class="observablehq observablehq--block"><!--:b09ac75f:--></div>
 <!-- Charts -->
@@ -187,7 +205,7 @@ define({id: "e03df9e4", body: () => {
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l govuk-!-margin-top-7">Trade with Spain, in current prices (ONS)</h1>
   <!-- -->
-  <div class="govuk-grid-row  govuk-!-margin-bottom-4">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
       <div class="card" style="min-height: 400px">
         <h2><span class="govuk-heading-s">UK trade with Spain</span></h2>
@@ -198,7 +216,15 @@ define({id: "e03df9e4", body: () => {
         <h2><span class="govuk-heading-s">UK trade balance with Spain</span></h2>
       </div>
     </div>
+  </div>
   <!-- -->
+  <div class="govuk-grid-row govuk-!-margin-bottom-4">
+    <div class="govuk-grid-column-full">
+      <div class="card">
+        <h2><span class="govuk-heading-s">Full data table</span></h2>
+        <observablehq-loading></observablehq-loading><!--:99ca8759:-->
+      </div>
+    </div>
   </div>
 <!-- Closes .govuk-width-container -->
 </div>
@@ -206,7 +232,7 @@ define({id: "e03df9e4", body: () => {
 <footer id="observablehq-footer">
 <div>
 <div class="govuk-width-container">
-  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Thursday 9 January 2025 at 09:30:21 GMT.</p>
+  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Thursday 9 January 2025 at 14:23:52 GMT.</p>
 </div>
 <div class="govuk-footer">
   <div class="govuk-width-container">
