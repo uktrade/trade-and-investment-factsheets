@@ -54,6 +54,12 @@ function trade(data) {
         x: d => '' + d['Year'],
         z: d => d['flow'],
       }),
+      Plot.line(data, Plot.groupX({
+        y: "sum",
+      }, {
+        y: d => d['Million'] / 1000.0,
+        x: d => '' + d['Year'],
+      })),
     ]
   })
 };
