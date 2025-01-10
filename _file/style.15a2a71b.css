@@ -20,11 +20,13 @@
 .govuk-width-container {
   max-width: 1100px
 }
-#observablehq-main, #observablehq-header, #observablehq-footer {
+#observablehq-main, #observablehq-header, #observablehq-footer, #observablehq-header ~ #observablehq-main {
   max-width: none;
   display: block;
   padding: 0;
   margin: 0;
+  height: auto;
+  border: none;
   position: static;
 }
 @media (min-width: 40.0625em) {
@@ -65,13 +67,17 @@ p, table, figure, figcaption, h1, h2, h3, h4, h5, h6, .katex-display {
 
 /* Restore link styles */
 /* (If changing these, be sure to test keyboard as well as mouse navigation) */
-.govuk-link[href] {
+.govuk-link[href],
+.govuk-breadcrumbs__link[href] {
+  text-decoration-skip-ink: none;
+  text-decoration: underline;
+}
+.govuk-link[href]:focus,
+.govuk-breadcrumbs__link:focus {
   text-decoration-skip-ink: none;
 }
-.govuk-link[href]:focus {
-  text-decoration-skip-ink: none;
-}
-.govuk-link[href]:hover {
+.govuk-link[href]:hover,
+.govuk-breadcrumbs__link:hover {
   text-decoration-thickness: max(3px, .1875rem, .12em);
   text-decoration-skip-ink: none;
 }
