@@ -16,7 +16,7 @@
 #    We have worked around this by using empty HTML comments <-- --> to add in some whitespace.
 
 # Title is empty since this is a single page site, and the <title> element will contain the site name
-title: 
+title: {{ country.Display }}
 toc: false
 theme: air
 ---
@@ -28,7 +28,7 @@ const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D
 
 <!-- Data -->
 ```js
-const tradeTotals = await FileAttachment("./data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
+const tradeTotals = await FileAttachment("../data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
 const spainTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['ISO2'] === 'ES' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
 ```
 
@@ -80,18 +80,18 @@ function tradeBalance(data) {
 
 <!-- HTML combining all the above -->
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-l govuk-!-margin-top-7">Trade with Spain, in current prices (ONS)</h1>
+  <h1 class="govuk-heading-l govuk-!-margin-top-7">Trade with {{ country.Display }}, in current prices (ONS)</h1>
   <!-- -->
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
       <div class="card">
-        <h2><span class="govuk-heading-s">UK trade with Spain</span></h2>
+        <h2><span class="govuk-heading-s">UK trade with {{ country.Display }}</span></h2>
         ${trade(spainTotals)}
       </div>
     </div>
     <div class="govuk-grid-column-one-half">
       <div class="card">
-        <h2><span class="govuk-heading-s">UK trade balance with Spain</span></h2>
+        <h2><span class="govuk-heading-s">UK trade balance with {{ country.Display }}</span></h2>
         ${tradeBalance(spainTotals)}
       </div>
     </div>
