@@ -91,7 +91,13 @@ function tradeBalance(data) {
   </ol>
   </nav>
   <div class="govuk-main-wrapper">
-  <h1 class="govuk-heading-l">Trade with {{ country.Display }}, in current prices (ONS)</h1>
+  <span class="govuk-caption-l">Trade and investment factsheets</span>
+  <h1 class="govuk-heading-l">{{ country.Display }}</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-l">Snapshot of the latest statistics on trade and investment between the UK and {{ country.Display }}.</p>
+    </div>
+  </div>
   <!-- -->
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
