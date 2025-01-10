@@ -1,0 +1,123 @@
+---
+# Notes to maintainers:
+#
+# 1. It's probably good to read the following before attempting changes:
+#    https://observablehq.com/framework/markdown
+#    https://observablehq.com/framework/javascript
+#    https://observablehq.com/framework/reactivity
+#    https://observablehq.com/@observablehq/htl
+#    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+#
+# 2. We use quite a lot of HTML to leverage the GOV.UK Design System, more than most Observable
+#    Framework examples, which means you probably want to add blank lines for readability. But be
+#    careful! In normal HTML this has no effect, but here it runs the risk of being parsed as
+#    Markdown, and if too intented will be treated as a code block to display.
+#
+#    We have worked around this by using empty HTML comments <-- --> to add in some whitespace.
+
+# Title is empty since this is a single page site, and the <title> element will contain the site name
+title: 
+toc: false
+theme: air
+---
+
+<!-- Constants -->
+```js
+const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"];
+```
+
+<!-- Data -->
+```js
+const tradeTotals = await FileAttachment("./data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
+const spainTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['ISO2'] === 'ES' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
+```
+
+<!-- Input widgets -->
+```js
+// None at the moment
+```
+
+<!-- Charts -->
+```js
+function trade(data) {
+  return Plot.plot({
+    subtitle: "",
+    style: "font-size: 14px;",
+    marginBottom: 40,
+    marginTop: 30,
+    x: {label: null, tickRotate: -45, type: "band"},
+    y: {label: "£ Billion", grid: true},
+    marks: [
+      Plot.gridY(),
+      Plot.line(data, {
+        y: d => d['Million'] / 1000.0,
+        x: d => '' + d['Year'],
+        z: d => d['flow'],
+      }),
+    ]
+  })
+};
+
+function tradeBalance(data) {
+  return Plot.plot({
+    subtitle: "",
+    style: "font-size: 14px;",
+    marginBottom: 40,
+    marginTop: 30,
+    x: {label: null, tickRotate: -45, type: "band"},
+    y: {label: "£ Billion", grid: true},
+    marks: [ 
+      Plot.gridY(),
+      Plot.barY(data, Plot.groupX(
+        {y: (values, b) => values.reduce((partial, a) => partial + a['Million'] * (a['flow'] == 'total_import' ? -1 : 1)/1000.0, 0.0)},
+        {x: d => '' + d['Year'], fill: govuk_colour_palette[0]})
+      ),
+      Plot.ruleY([0], {stroke: "currentColor"}),
+    ]
+  })
+};
+```
+
+<!-- HTML combining all the above -->
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-l govuk-!-margin-top-7">Trade with Spain, in current prices (ONS)</h1>
+  <!-- -->
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <div class="card">
+        <h2><span class="govuk-heading-s">UK trade with Spain</span></h2>
+        ${trade(spainTotals)}
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-half">
+      <div class="card">
+        <h2><span class="govuk-heading-s">UK trade balance with Spain</span></h2>
+        ${tradeBalance(spainTotals)}
+      </div>
+    </div>
+  </div>
+  <!-- -->
+  <div class="govuk-grid-row govuk-!-margin-bottom-4">
+    <div class="govuk-grid-column-full">
+      <div class="card">
+        <h2><span class="govuk-heading-s">Data table</span></h2>
+        ${Inputs.table(spainTotals, {
+          columns: [
+            'Year',
+            'flow',
+            'Million',
+          ],
+          header: {
+            flow: "Flow",
+            Million: "Value (£ Million)",
+          },
+          format: {
+            Year: x => x,
+            flow: x => x,
+          },
+        })}
+      </div>
+    </div>
+  </div>
+<!-- Closes .govuk-width-container -->
+</div>
