@@ -47,18 +47,25 @@ function trade(data) {
     marginTop: 30,
     x: {label: null, tickRotate: -45, type: "band"},
     y: {label: "£ Billion", grid: true},
+    color: {
+      range: govuk_colour_palette,
+    },
     marks: [
       Plot.gridY(),
       Plot.line(data, {
         y: d => d['Million'] / 1000.0,
         x: d => '' + d['Year'],
         z: d => d['flow'],
+        stroke: d => d["flow"],
+        strokeWidth: 3,
       }),
       Plot.line(data, Plot.groupX({
         y: "sum",
       }, {
         y: d => d['Million'] / 1000.0,
         x: d => '' + d['Year'],
+        stroke: 2,
+        strokeWidth: 3,
       })),
     ]
   })
