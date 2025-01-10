@@ -12,7 +12,10 @@ args = parser.parse_args()
 # Get matching country row (some countries are duplicated, but choosing the one with ISO3 should be safe
 with open('src/data/country-names.csv', newline='') as csvfile:
     countries = list(csv.DictReader(csvfile))
-country = next(country for country in countries if country['Display'] == args.country and country['ISO3'] != '')
+country = next(
+	(country for country in countries if country['Display'] == args.country and country['ISO3'] != ''),
+	next(country for country in countries if country['Display'] == args.country and country['ISO2'] != ''),
+)
 
 # Process template to output md file for this country
 environment = Environment(
