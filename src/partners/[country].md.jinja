@@ -80,7 +80,18 @@ function tradeBalance(data) {
 
 <!-- HTML combining all the above -->
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-l govuk-!-margin-top-7">Trade with {{ country.Display }}, in current prices (ONS)</h1>
+  <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/partners/{{ country.Display }}">{{ country.Display }}</a>
+    </li>
+  </ol>
+  </nav>
+  <div class="govuk-main-wrapper">
+  <h1 class="govuk-heading-l">Trade with {{ country.Display }}, in current prices (ONS)</h1>
   <!-- -->
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
@@ -119,5 +130,5 @@ function tradeBalance(data) {
       </div>
     </div>
   </div>
-<!-- Closes .govuk-width-container -->
-</div>
+<!-- Closes .govuk-width-container and .govuk-main-wrapper -->
+</div></div>

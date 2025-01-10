@@ -6,7 +6,7 @@ theme: air
 ---
 
 <!-- HTML combining all the above -->
-<div class="govuk-width-container">
+<div class="govuk-width-container"><div class="govuk-main-wrapper">
 <ul class="govuk-list">
   <li><a href="./partners/Afghanistan" class="govuk-link govuk-link--no-visited-state">Afghanistan</a>
   <li><a href="./partners/Albania" class="govuk-link govuk-link--no-visited-state">Albania</a>
@@ -246,5 +246,5 @@ theme: air
   <li><a href="./partners/Zimbabwe" class="govuk-link govuk-link--no-visited-state">Zimbabwe</a>
 
 </ul>
-<!-- Closes .govuk-width-container -->
-</div>
+<!-- Closes .govuk-width-container and .govuk-main-wrapper -->
+</div></div>
