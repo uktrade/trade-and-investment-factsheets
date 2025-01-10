@@ -113,6 +113,6 @@ export default {
   // typographer: false, // smart quotes and other typographic improvements
   // cleanUrls: true, // drop .html from URLs
   async *dynamicPaths() {
-    yield 'spain';
+    yield 'Spain';
   },
 };

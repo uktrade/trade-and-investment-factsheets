@@ -24,7 +24,7 @@ theme: air
 <!-- HTML combining all the above -->
 <div class="govuk-width-container">
 <p class="govuk-body">
-  <a href="./spain" class="govuk-link govuk-link--no-visited-state">Spain</a>
+  <a href="./partners/Spain" class="govuk-link govuk-link--no-visited-state">Spain</a>
 </p>
 <!-- Closes .govuk-width-container -->
 </div>
