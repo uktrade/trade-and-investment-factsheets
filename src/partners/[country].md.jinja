@@ -68,10 +68,13 @@ function tradeBalance(data) {
     y: {label: "£ Billion", grid: true},
     marks: [ 
       Plot.gridY(),
-      Plot.barY(data, Plot.groupX(
-        {y: (values, b) => values.reduce((partial, a) => partial + a['Million'] * (a['flow'] == 'total_import' ? -1 : 1)/1000.0, 0.0)},
-        {x: d => '' + d['Year'], fill: govuk_colour_palette[0]})
-      ),
+      Plot.barY(data, Plot.groupX({
+        y: "sum",
+      }, {
+        x: d => '' + d['Year'],
+        y: d => d['Million'] * (d['flow'] == 'total_import' ? -1 : 1) / 1000.0,
+        fill: govuk_colour_palette[0],
+      })),
       Plot.ruleY([0], {stroke: "currentColor"}),
     ]
   })
