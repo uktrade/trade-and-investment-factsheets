@@ -47,13 +47,19 @@ go into the `trade-and-investment-factsheets` folder:
 cd trade-and-investment-factsheets
 ```
 
-And then run:
+And then run (only needed once, or when dependencies are updated):
+
+```
+npm install
+```
+
+and then:
 
 ```
 npm run dev
 ```
 
-Then visit <http://localhost:3000> to preview the bashboard.
+Then visit <http://localhost:3000> to preview the dashboard.
 
 For more information, see <https://observablehq.com/framework/getting-started>.
 
