@@ -9,6 +9,7 @@ This repository contains the source code for <a href="https://trade-and-investme
 
 ### Contents
 
+- [Required reading](#required-reading)
 - [Running locally](#running-locally)
 - [Making and previewing changes in the browser](#making-and-previewing-changes-in-the-browser)
 - [Deployment](#deployment)
@@ -16,6 +17,21 @@ This repository contains the source code for <a href="https://trade-and-investme
 - [Project structure](#project-structure)
 
 ---
+
+## Required reading
+
+It's a very good idea to read all of the following _before_ attempting changes.
+
+- https://observablehq.com/framework/markdown
+- https://observablehq.com/framework/javascript
+- https://observablehq.com/framework/reactivity
+- https://observablehq.com/@observablehq/htl
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+Also, we use quite a lot of HTML to leverage the GOV.UK Design System, more than most Observable Framework examples, which means you probably want to add blank lines for readability. But be careful! In normal HTML this has no effect, but here it runs the risk of being parsed as Markdown, and if too indented will be treated as a code block to display.
+
+You can work around this by using empty HTML comments `<-- -->` to add in some whitespace.
+
 
 ## Running locally
 
