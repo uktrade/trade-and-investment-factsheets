@@ -6,18 +6,151 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="preload" as="style" href="./_observablehq/theme-air.c3bd821c.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.ea9fd553.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="./_observablehq/theme-air.c3bd821c.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
 <link rel="modulepreload" href="./_observablehq/client.70dd16ed.js">
 <link rel="modulepreload" href="./_observablehq/runtime.79fe2d2b.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.97c14579.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.511c8117.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/d3b1d894.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/fcf2830e.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/a62ae5ce.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/37839b6a.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/bd0afa17.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/6495590f.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/84d7b8e9.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/2c0cdfa2.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/d496a3b3.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/00c41b5d.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/b5f7cdc6.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/ef06b1ff.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/6f15f633.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/35880c2a.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/5e1ff060.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/33fb7288.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/5e427f4b.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/f1db2593.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/034b7bcb.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/4bb53638.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/bbafde58.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/aa5b35a8.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/32c7fec2.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/4143aac9.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/cf9b720b.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/a4e530fb.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/be692bd9.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/3a9ac1c1.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/28d1ef76.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/f31b5398.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/0c259fbf.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/da4a6ccc.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/1ee6c50d.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/5eed35fd.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/e67acb27.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/8ac9039b.js">
 
     <link rel="stylesheet" href="./_npm/govuk-frontend@5.4.0/dist/govuk/govuk-frontend.min.css">
     <link rel="stylesheet" href="./_file/style.f9386e3a.css">
   
 <script type="module">
 
-import "./_observablehq/client.70dd16ed.js";
+import {define} from "./_observablehq/client.70dd16ed.js";
+import {registerFile} from "./_observablehq/stdlib.97c14579.js";
+
+registerFile("./data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"./data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"./_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736498682230,"size":1549219});
+
+define({id: "16967039", outputs: ["govuk_colour_palette"], body: () => {
+const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"];
+return {govuk_colour_palette};
+}});
+
+define({id: "fa181c25", inputs: ["FileAttachment"], outputs: ["tradeTotals","spainTotals"], body: async (FileAttachment) => {
+const tradeTotals = await FileAttachment("./data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
+const spainTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['ISO2'] === 'ES' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
+return {tradeTotals,spainTotals};
+}});
+
+define({id: "5b51f5ff", body: () => {
+// None at the moment
+}});
+
+define({id: "d290b6e1", inputs: ["Plot","govuk_colour_palette"], outputs: ["trade","tradeBalance"], body: (Plot,govuk_colour_palette) => {
+function trade(data) {
+  return Plot.plot({
+    subtitle: "",
+    style: "font-size: 14px;",
+    marginBottom: 40,
+    marginTop: 30,
+    x: {label: null, tickRotate: -45, type: "band"},
+    y: {label: "£ Billion", grid: true},
+    marks: [
+      Plot.gridY(),
+      Plot.line(data, {
+        y: d => d['Million'] / 1000.0,
+        x: d => '' + d['Year'],
+        z: d => d['flow'],
+      }),
+    ]
+  })
+};
+
+function tradeBalance(data) {
+  return Plot.plot({
+    subtitle: "",
+    style: "font-size: 14px;",
+    marginBottom: 40,
+    marginTop: 30,
+    x: {label: null, tickRotate: -45, type: "band"},
+    y: {label: "£ Billion", grid: true},
+    marks: [ 
+      Plot.gridY(),
+      Plot.barY(data, Plot.groupX(
+        {y: (values, b) => values.reduce((partial, a) => partial + a['Million'] * (a['flow'] == 'total_import' ? -1 : 1)/1000.0, 0.0)},
+        {x: d => '' + d['Year'], fill: govuk_colour_palette[0]})
+      ),
+      Plot.ruleY([0], {stroke: "currentColor"}),
+    ]
+  })
+};
+return {trade,tradeBalance};
+}});
+
+define({id: "d01ad654", mode: "inline", inputs: ["trade","spainTotals","display"], body: async (trade,spainTotals,display) => {
+display(await(
+trade(spainTotals)
+))
+}});
+
+define({id: "84ea47fb", mode: "inline", inputs: ["tradeBalance","spainTotals","display"], body: async (tradeBalance,spainTotals,display) => {
+display(await(
+tradeBalance(spainTotals)
+))
+}});
+
+define({id: "b1d46177", mode: "inline", inputs: ["Inputs","spainTotals","display"], body: async (Inputs,spainTotals,display) => {
+display(await(
+Inputs.table(spainTotals, {
+          columns: [
+            'Year',
+            'flow',
+            'Million',
+          ],
+          header: {
+            flow: "Flow",
+            Million: "Value (£ Million)",
+          },
+          format: {
+            Year: x => x,
+            flow: x => x,
+          },
+        })
+))
+}});
 
 </script>
 <div id="observablehq-center">
@@ -45,11 +178,41 @@ import "./_observablehq/client.70dd16ed.js";
 </div></div>
 </header>
 <main id="observablehq-main" class="observablehq">
+<!-- Constants -->
+<div class="observablehq observablehq--block"><!--:16967039:--></div>
+<!-- Data -->
+<div class="observablehq observablehq--block"><!--:fa181c25:--></div>
+<!-- Input widgets -->
+<div class="observablehq observablehq--block"><!--:5b51f5ff:--></div>
+<!-- Charts -->
+<div class="observablehq observablehq--block"><!--:d290b6e1:--></div>
 <!-- HTML combining all the above -->
 <div class="govuk-width-container">
-<p class="govuk-body">
-  <a href="./spain" class="govuk-link govuk-link--no-visited-state">Spain</a>
-</p>
+  <h1 class="govuk-heading-l govuk-!-margin-top-7">Trade with Spain, in current prices (ONS)</h1>
+  <!-- -->
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <div class="card">
+        <h2><span class="govuk-heading-s">UK trade with Spain</span></h2>
+        <observablehq-loading></observablehq-loading><!--:d01ad654:-->
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-half">
+      <div class="card">
+        <h2><span class="govuk-heading-s">UK trade balance with Spain</span></h2>
+        <observablehq-loading></observablehq-loading><!--:84ea47fb:-->
+      </div>
+    </div>
+  </div>
+  <!-- -->
+  <div class="govuk-grid-row govuk-!-margin-bottom-4">
+    <div class="govuk-grid-column-full">
+      <div class="card">
+        <h2><span class="govuk-heading-s">Data table</span></h2>
+        <observablehq-loading></observablehq-loading><!--:b1d46177:-->
+      </div>
+    </div>
+  </div>
 <!-- Closes .govuk-width-container -->
 </div>
 </main>
