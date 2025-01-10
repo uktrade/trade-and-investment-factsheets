@@ -29,7 +29,7 @@ const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D
 <!-- Data -->
 ```js
 const tradeTotals = await FileAttachment("../data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
-const spainTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['ISO2'] === 'ES' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
+const spainTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['ISO2'] === '{{ country.ISO2 }}' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
 ```
 
 <!-- Input widgets -->
