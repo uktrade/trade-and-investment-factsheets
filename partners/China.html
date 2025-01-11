@@ -62,10 +62,10 @@
 import {define} from "../_observablehq/client.e6cef078.js";
 import {registerFile} from "../_observablehq/stdlib.97c14579.js";
 
-registerFile("../data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"../data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"../_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736579469656,"size":1549219});
+registerFile("../data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"../data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"../_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736581033959,"size":1549219});
 
-define({id: "16967039", outputs: ["govuk_colour_palette"], body: () => {
-const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"];
+define({id: "0bb69e6a", outputs: ["govuk_colour_palette"], body: () => {
+const govuk_colour_palette = ["#F46A25", "#28A197", "#12436D", "#801650", "#3D3D3D", "#A285D1"];
 return {govuk_colour_palette};
 }});
 
@@ -79,11 +79,12 @@ define({id: "5b51f5ff", body: () => {
 // None at the moment
 }});
 
-define({id: "78918e92", inputs: ["Plot","govuk_colour_palette"], outputs: ["trade","tradeBalance"], body: (Plot,govuk_colour_palette) => {
+define({id: "98c34a7e", inputs: ["Plot","govuk_colour_palette"], outputs: ["trade","tradeBalance"], body: (Plot,govuk_colour_palette) => {
 function trade(data) {
   return Plot.plot({
     subtitle: "",
-    style: "font-size: 14px;",
+    style: "font-size: 16px;",
+    marginLeft: 40,
     marginBottom: 40,
     marginTop: 30,
     x: {label: null, tickRotate: -45, type: "band"},
@@ -98,7 +99,7 @@ function trade(data) {
         x: d => '' + d['Year'],
         z: d => d['flow'],
         stroke: d => d["flow"],
-        strokeWidth: 3,
+        strokeWidth: 5,
       }),
       Plot.line(data, Plot.groupX({
         y: "sum",
@@ -106,7 +107,7 @@ function trade(data) {
         y: d => d['Million'] / 1000.0,
         x: d => '' + d['Year'],
         stroke: 2,
-        strokeWidth: 3,
+        strokeWidth: 6,
       })),
     ]
   })
@@ -115,7 +116,8 @@ function trade(data) {
 function tradeBalance(data) {
   return Plot.plot({
     subtitle: "",
-    style: "font-size: 14px;",
+    style: "font-size: 16px;",
+    marginLeft: 40,
     marginBottom: 40,
     marginTop: 30,
     x: {label: null, tickRotate: -45, type: "band"},
@@ -127,7 +129,7 @@ function tradeBalance(data) {
       }, {
         x: d => '' + d['Year'],
         y: d => d['Million'] * (d['flow'] == 'total_import' ? -1 : 1) / 1000.0,
-        fill: govuk_colour_palette[0],
+        fill: govuk_colour_palette[2],
       })),
       Plot.ruleY([0], {stroke: "currentColor"}),
     ]
@@ -195,13 +197,13 @@ Inputs.table(spainTotals, {
 </header>
 <main id="observablehq-main" class="observablehq">
 <!-- Constants -->
-<div class="observablehq observablehq--block"><!--:16967039:--></div>
+<div class="observablehq observablehq--block"><!--:0bb69e6a:--></div>
 <!-- Data -->
 <div class="observablehq observablehq--block"><!--:732f8c70:--></div>
 <!-- Input widgets -->
 <div class="observablehq observablehq--block"><!--:5b51f5ff:--></div>
 <!-- Charts -->
-<div class="observablehq observablehq--block"><!--:78918e92:--></div>
+<div class="observablehq observablehq--block"><!--:98c34a7e:--></div>
 <!-- HTML combining all the above -->
 <div class="govuk-width-container">
   <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
@@ -270,7 +272,7 @@ Inputs.table(spainTotals, {
 <footer id="observablehq-footer">
 <div>
 <div class="govuk-width-container">
-  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Saturday 11 January 2025 at 07:10:28 GMT.</p>
+  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Saturday 11 January 2025 at 07:36:32 GMT.</p>
 </div>
 <div class="govuk-footer">
   <div class="govuk-width-container">
