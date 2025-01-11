@@ -1,6 +1,7 @@
 name: "GitHub pages: deploy preview"
 
-concurrency: preview-${{ github.ref }}
+concurrency:
+  group: preview-${{ github.ref }}
 
 on:
   pull_request:

@@ -1,6 +1,8 @@
 name: "GitHub pages: tidy up preview"
 
-concurrency: preview-${{ github.ref }}
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
 
 on:
   pull_request:
@@ -18,3 +20,4 @@ jobs:
         with:
           umbrella-dir: preview
           source-dir: dist
+          custom-url: trade-and-investment-factsheets.docs.trade.gov.uk
