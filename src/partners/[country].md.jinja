@@ -94,7 +94,7 @@ function table(data) {
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header">Value in £bn</th>
-        ${dataByYearAndFlow.keys().map((year) =>
+        ${Array.from(dataByYearAndFlow.keys()).map((year) =>
           htl.html`<th scope="col" class="govuk-table__header govuk-table__header--numeric">${year}</th>`
         )}
       </tr>
@@ -102,25 +102,25 @@ function table(data) {
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Total trade</th>
-        ${dataByYearAndFlow.entries().map((entry) =>
+        ${Array.from(dataByYearAndFlow.entries()).map((entry) =>
           htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million'] + entry[1].get('total_import')[0]['Million']) / 1000.0).toFixed(1)}</td>`
         )}
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Exports</th>
-        ${dataByYearAndFlow.entries().map((entry) =>
+        ${Array.from(dataByYearAndFlow.entries()).map((entry) =>
           htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million']) / 1000.0).toFixed(1)}</td>`
         )}
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Imports</th>
-        ${dataByYearAndFlow.entries().map((entry) =>
+        ${Array.from(dataByYearAndFlow.entries()).map((entry) =>
           htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_import')[0]['Million']) / 1000.0).toFixed(1)}</td>`
         )}
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Trade balance</th>
-        ${dataByYearAndFlow.entries().map((entry) =>
+        ${Array.from(dataByYearAndFlow.entries()).map((entry) =>
           htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million'] - entry[1].get('total_import')[0]['Million']) / 1000.0).toFixed(1)}</td>`
         )}
       </tr>
