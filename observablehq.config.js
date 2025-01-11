@@ -22,6 +22,10 @@ export default {
     <link rel="stylesheet" href="npm:govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.css">
     <link rel="stylesheet" href="style.css">
     <script type="module" src="npm:govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.js"></script>
+    <script type="module">
+      import { initAll } from "/_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.js"
+      initAll()
+    </script>
   `,
 
   // The path to the source root.
