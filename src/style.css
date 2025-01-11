@@ -13,6 +13,7 @@
 }
 .card {
   border-radius: 0; /* The design system doesn't tend to have rounded corners */
+  margin-top: 0;    /* More robust/expected/without hidden behaviour to use gov-uk margins */
 }
 
 /* Have a wider site than the GOV.UK default. 1100px is what the GOV.UK Eleventy */
