@@ -15,6 +15,7 @@ This repository contains the source code for <a href="https://trade-and-investme
 - [Deployment](#deployment)
 - [Command reference](#command-reference)
 - [Project structure](#project-structure)
+- [Updating R packages](#updating-r-packages)
 
 ---
 
@@ -147,3 +148,26 @@ The project structure follows the usual Observable Framework structure. An examp
 **`src/components`** - You can put shared [JavaScript modules](https://observablehq.com/framework/javascript/imports) anywhere in the source root, but it's recommended to put them here. This helps you pull code out of Markdown files and into JavaScript modules, making it easier to reuse code across pages, write tests and run linters, and even share code with vanilla web applications.
 
 **`observablehq.config.js`** - This is the [project configuration](https://observablehq.com/framework/config) file, such as the pages and sections in the sidebar navigation, and the project’s title.
+
+
+## Updating R packages
+
+1. Make sure to have `renv` installed locally.
+
+   ```bash
+   Rscript -e 'options(warn = 2); install.packages("renv", repos="https://cloud.r-project.org")'
+   ```
+
+2. Add/remove the packages from [DESCRIPTION](./DESCRIPTION).
+
+3. Generate a new [renv.lock](./renv.lock) based on the packages listed in [DESCRIPTION](./DESCRIPTION).
+
+   ```bash
+   Rscript -e 'if (file.exists("renv.lock")) {file.remove("renv.lock")}; renv::settings$snapshot.type("explicit"); renv::install(library=tempdir(), lock=TRUE)'
+   ```
+
+4. Commit both the updated [DESCRIPTION](./DESCRIPTION) and [renv.lock](./renv.lock) to a new branch.
+
+5. Raise a PR to merge the new branch into the main branch, and make sure its actions and preview work without error and as expected.
+
+6. Merge the PR.
