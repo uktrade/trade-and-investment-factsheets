@@ -6,21 +6,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="preload" as="style" href="../_observablehq/theme-air.c3bd821c.css">
-<link rel="preload" as="style" href="../_observablehq/stdlib/inputs.ea9fd553.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="../_observablehq/theme-air.c3bd821c.css">
-<link rel="stylesheet" type="text/css" href="../_observablehq/stdlib/inputs.ea9fd553.css">
-<link rel="modulepreload" href="../_observablehq/client.612600c8.js">
+<link rel="modulepreload" href="../_observablehq/client.e840bffa.js">
 <link rel="modulepreload" href="../_observablehq/runtime.79fe2d2b.js">
 <link rel="modulepreload" href="../_observablehq/stdlib.97c14579.js">
 <link rel="modulepreload" href="../_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.fe29c906.js">
-<link rel="modulepreload" href="../_observablehq/stdlib/inputs.511c8117.js">
+<link rel="modulepreload" href="../_npm/d3@7.9.0/a636dfb6.js">
+<link rel="modulepreload" href="../_npm/htl@0.3.1/063eb405.js">
 <link rel="modulepreload" href="../_npm/@observablehq/plot@0.6.16/f2bd6d19.js">
 <link rel="modulepreload" href="../_npm/d3-dsv@3.0.1/407f7a1f.js">
-<link rel="modulepreload" href="../_npm/htl@0.3.1/063eb405.js">
-<link rel="modulepreload" href="../_npm/isoformat@0.2.1/c68fbd73.js">
-<link rel="modulepreload" href="../_npm/d3@7.9.0/a636dfb6.js">
-<link rel="modulepreload" href="../_npm/interval-tree-1d@1.0.4/a62ae5ce.js">
 <link rel="modulepreload" href="../_npm/d3-array@3.2.4/37839b6a.js">
 <link rel="modulepreload" href="../_npm/d3-axis@3.0.0/bd0afa17.js">
 <link rel="modulepreload" href="../_npm/d3-brush@3.0.0/6495590f.js">
@@ -50,9 +45,11 @@
 <link rel="modulepreload" href="../_npm/d3-timer@3.0.1/f31b5398.js">
 <link rel="modulepreload" href="../_npm/d3-transition@3.0.1/0c259fbf.js">
 <link rel="modulepreload" href="../_npm/d3-zoom@3.0.0/da4a6ccc.js">
-<link rel="modulepreload" href="../_npm/binary-search-bounds@2.0.5/1ee6c50d.js">
+<link rel="modulepreload" href="../_npm/isoformat@0.2.1/c68fbd73.js">
+<link rel="modulepreload" href="../_npm/interval-tree-1d@1.0.4/a62ae5ce.js">
 <link rel="modulepreload" href="../_npm/internmap@2.0.3/5eed35fd.js">
 <link rel="modulepreload" href="../_npm/delaunator@5.0.1/e67acb27.js">
+<link rel="modulepreload" href="../_npm/binary-search-bounds@2.0.5/1ee6c50d.js">
 <link rel="modulepreload" href="../_npm/robust-predicates@3.0.2/8ac9039b.js">
 
     <link rel="stylesheet" href="../_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.css">
@@ -60,10 +57,10 @@
   
 <script type="module">
 
-import {define} from "../_observablehq/client.612600c8.js";
+import {define} from "../_observablehq/client.e840bffa.js";
 import {registerFile} from "../_observablehq/stdlib.97c14579.js";
 
-registerFile("../data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"../data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"../_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736617767153,"size":1549219});
+registerFile("../data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"../data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"../_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736623436363,"size":1549219});
 
 define({id: "84bbedac", outputs: ["initAll"], body: async () => {
 const {initAll} = await import("../_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.fe29c906.js");
@@ -86,7 +83,7 @@ define({id: "5b51f5ff", body: () => {
 // None at the moment
 }});
 
-define({id: "39c639c9", inputs: ["Plot","govuk_colour_palette"], outputs: ["tradeValue","tradeBalance"], body: (Plot,govuk_colour_palette) => {
+define({id: "c3174c92", inputs: ["Plot","govuk_colour_palette","d3","htl"], outputs: ["tradeValue","tradeBalance","table"], body: (Plot,govuk_colour_palette,d3,htl) => {
 function tradeValue(data) {
   return Plot.plot({
     subtitle: "",
@@ -144,7 +141,50 @@ function tradeBalance(data) {
     ]
   })
 };
-return {tradeValue,tradeBalance};
+
+function table(data) {
+  const dataByYearAndFlow = d3.group(data, d => d.Year, d => d.flow);
+  console.log(dataByYearAndFlow)
+  return htl.html`<table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--m">UK trade with Guinea</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Value in £bn</th>
+        ${dataByYearAndFlow.keys().map((year) =>
+          htl.html`<th scope="col" class="govuk-table__header govuk-table__header--numeric">${year}</th>`
+        )}
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Total trade</th>
+        ${dataByYearAndFlow.entries().map((entry) =>
+          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million'] + entry[1].get('total_import')[0]['Million']) / 1000.0).toFixed(1)}</td>`
+        )}
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Exports</th>
+        ${dataByYearAndFlow.entries().map((entry) =>
+          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million']) / 1000.0).toFixed(1)}</td>`
+        )}
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Imports</th>
+        ${dataByYearAndFlow.entries().map((entry) =>
+          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_import')[0]['Million']) / 1000.0).toFixed(1)}</td>`
+        )}
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Trade balance</th>
+        ${dataByYearAndFlow.entries().map((entry) =>
+          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million'] - entry[1].get('total_import')[0]['Million']) / 1000.0).toFixed(1)}</td>`
+        )}
+      </tr>
+    </tbody>
+  </table>
+  `
+}
+return {tradeValue,tradeBalance,table};
 }});
 
 define({id: "ece0190e", mode: "inline", inputs: ["tradeValue","spainTotals","display"], body: async (tradeValue,spainTotals,display) => {
@@ -159,23 +199,9 @@ tradeBalance(spainTotals)
 ))
 }});
 
-define({id: "b1d46177", mode: "inline", inputs: ["Inputs","spainTotals","display"], body: async (Inputs,spainTotals,display) => {
+define({id: "e3cc505e", mode: "inline", inputs: ["table","spainTotals","display"], body: async (table,spainTotals,display) => {
 display(await(
-Inputs.table(spainTotals, {
-          columns: [
-            'Year',
-            'flow',
-            'Million',
-          ],
-          header: {
-            flow: "Flow",
-            Million: "Value (£ Million)",
-          },
-          format: {
-            Year: x => x,
-            flow: x => x,
-          },
-        })
+table(spainTotals)
 ))
 }});
 
@@ -214,7 +240,7 @@ Inputs.table(spainTotals, {
 <!-- Input widgets -->
 <div class="observablehq observablehq--block"><!--:5b51f5ff:--></div>
 <!-- Charts -->
-<div class="observablehq observablehq--block"><!--:39c639c9:--></div>
+<div class="observablehq observablehq--block"><!--:c3174c92:--></div>
 <!-- HTML combining all the above -->
 <div class="govuk-width-container">
   <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
@@ -286,8 +312,7 @@ Inputs.table(spainTotals, {
         </div>
       </div>
       <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tabular-data">
-        <h2><span class="govuk-heading-s">Data table</span></h2>
-        <observablehq-loading></observablehq-loading><!--:b1d46177:-->
+        <observablehq-loading></observablehq-loading><!--:e3cc505e:-->
       </div>
     </div>
   </div>
@@ -296,7 +321,7 @@ Inputs.table(spainTotals, {
 <footer id="observablehq-footer">
 <div>
 <div class="govuk-width-container">
-  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Saturday 11 January 2025 at 17:48:46 GMT.</p>
+  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Saturday 11 January 2025 at 19:23:13 GMT.</p>
 </div>
 <div class="govuk-footer">
   <div class="govuk-width-container">
