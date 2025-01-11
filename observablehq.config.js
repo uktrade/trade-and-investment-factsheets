@@ -21,7 +21,6 @@ export default {
   head: `
     <link rel="stylesheet" href="npm:govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.css">
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="npm:govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.js"></script>
   `,
 
   // The path to the source root.
@@ -105,10 +104,6 @@ export default {
   </div>
 </div>
 <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
-<script type="module">
-  import { initAll } from "/_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.js"
-  initAll()
-</script>
 `,
   sidebar: false, // whether to show the sidebar
   // toc: true, // whether to show the table of contents

@@ -5,6 +5,12 @@ toc: false
 theme: air
 ---
 
+<!-- Initialise govuk-frontend -->
+```js
+import { initAll } from 'npm:govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.js'
+initAll();
+````
+
 <!-- HTML combining all the above -->
 <div class="govuk-width-container"><div class="govuk-main-wrapper">
 <ul class="govuk-list">
