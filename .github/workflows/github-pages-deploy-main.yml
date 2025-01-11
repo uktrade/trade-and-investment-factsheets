@@ -13,17 +13,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install Ubuntu packages
+        run: sudo apt install libfontconfig1-dev libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
       - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install Python packages
+        run: |
+          pip install -r requirements.txt
       - name: Install R
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: 'renv'
-      - name: Install Python packages
-        run: |
-          pip install -r requirements.txt
+      - name: Fetch from / populate R package cache
+        uses: actions/cache@v4
+        with:
+          key: r-${{ hashFiles('renv.lock') }}
+          path: |
+            ~/.cache/R/renv
       - name: Install R packages
         run: |
           sudo Rscript -e 'options(warn = 2); install.packages("renv", repos="https://cloud.r-project.org")'
