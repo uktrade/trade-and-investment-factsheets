@@ -57,14 +57,19 @@
 
     <link rel="stylesheet" href="../_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.css">
     <link rel="stylesheet" href="../_file/style.a2c6a059.css">
-    <script type="module" src="../_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.fe29c906.js"></script>
   
 <script type="module">
 
 import {define} from "../_observablehq/client.6ea24dcb.js";
 import {registerFile} from "../_observablehq/stdlib.97c14579.js";
 
-registerFile("../data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"../data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"../_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736616042833,"size":1549219});
+registerFile("../data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"../data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"../_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736616088382,"size":1549219});
+
+define({id: "84bbedac", outputs: ["initAll"], body: async () => {
+const {initAll} = await import("../_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.fe29c906.js");
+initAll();
+return {initAll};
+}});
 
 define({id: "0bb69e6a", outputs: ["govuk_colour_palette"], body: () => {
 const govuk_colour_palette = ["#F46A25", "#28A197", "#12436D", "#801650", "#3D3D3D", "#A285D1"];
@@ -200,6 +205,8 @@ Inputs.table(spainTotals, {
 </div></div>
 </header>
 <main id="observablehq-main" class="observablehq">
+<!-- Initialise govuk-frontend -->
+<div class="observablehq observablehq--block"><!--:84bbedac:--></div>
 <!-- Constants -->
 <div class="observablehq observablehq--block"><!--:0bb69e6a:--></div>
 <!-- Data -->
@@ -289,7 +296,7 @@ Inputs.table(spainTotals, {
 <footer id="observablehq-footer">
 <div>
 <div class="govuk-width-container">
-  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Saturday 11 January 2025 at 17:19:59 GMT.</p>
+  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Saturday 11 January 2025 at 17:20:45 GMT.</p>
 </div>
 <div class="govuk-footer">
   <div class="govuk-width-container">
@@ -325,10 +332,6 @@ Inputs.table(spainTotals, {
   </div>
 </div>
 <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
-<script type="module">
-  import { initAll } from "/_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.js"
-  initAll()
-</script>
 </div>
 </footer>
 </div>
