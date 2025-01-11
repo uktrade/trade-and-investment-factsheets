@@ -92,11 +92,11 @@ hr {
 }
 .govuk-header__link[href]:focus,
 .govuk-header__link[href]:hover,
-.govuk-tabs__tab[href]:focus,
-.govuk-tabs__tab[href]:hover {
+.govuk-tabs__tab[href]:focus {
   text-decoration: none;
 }
-.govuk-footer__link[href] {
+.govuk-footer__link[href],
+.govuk-tabs__tab[href] {
   text-decoration: underline;
   text-decoration-thickness: max(1px, .0625rem);
 }
@@ -104,7 +104,8 @@ hr {
   text-decoration-skip-ink: none;
   text-decoration: none;
 }
-.govuk-footer__link[href]:hover {
+.govuk-footer__link[href]:hover,
+.govuk-tabs__tab[href]:hover {
   text-decoration-thickness: max(3px, .1875rem, .12em);
   text-decoration-skip-ink: none;
 }
