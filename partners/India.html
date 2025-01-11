@@ -8,13 +8,13 @@
 <link rel="preload" as="style" href="../_observablehq/theme-air.c3bd821c.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="../_observablehq/theme-air.c3bd821c.css">
-<link rel="modulepreload" href="../_observablehq/client.e840bffa.js">
+<link rel="modulepreload" href="../_observablehq/client.e175090d.js">
 <link rel="modulepreload" href="../_observablehq/runtime.79fe2d2b.js">
 <link rel="modulepreload" href="../_observablehq/stdlib.97c14579.js">
 <link rel="modulepreload" href="../_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.fe29c906.js">
-<link rel="modulepreload" href="../_npm/d3@7.9.0/a636dfb6.js">
+<link rel="modulepreload" href="../_npm/d3@7.9.0/7def3f80.js">
 <link rel="modulepreload" href="../_npm/htl@0.3.1/063eb405.js">
-<link rel="modulepreload" href="../_npm/@observablehq/plot@0.6.16/f2bd6d19.js">
+<link rel="modulepreload" href="../_npm/@observablehq/plot@0.6.16/8171784b.js">
 <link rel="modulepreload" href="../_npm/d3-dsv@3.0.1/407f7a1f.js">
 <link rel="modulepreload" href="../_npm/d3-array@3.2.4/37839b6a.js">
 <link rel="modulepreload" href="../_npm/d3-axis@3.0.0/bd0afa17.js">
@@ -28,7 +28,7 @@
 <link rel="modulepreload" href="../_npm/d3-ease@3.0.1/6f15f633.js">
 <link rel="modulepreload" href="../_npm/d3-fetch@3.0.1/35880c2a.js">
 <link rel="modulepreload" href="../_npm/d3-force@3.0.0/60bb70b3.js">
-<link rel="modulepreload" href="../_npm/d3-format@3.1.0/33fb7288.js">
+<link rel="modulepreload" href="../_npm/d3-format@3.1.0/5851d7ef.js">
 <link rel="modulepreload" href="../_npm/d3-geo@3.1.1/5e427f4b.js">
 <link rel="modulepreload" href="../_npm/d3-hierarchy@3.1.2/f1db2593.js">
 <link rel="modulepreload" href="../_npm/d3-interpolate@3.0.1/034b7bcb.js">
@@ -36,8 +36,8 @@
 <link rel="modulepreload" href="../_npm/d3-polygon@3.0.1/bbafde58.js">
 <link rel="modulepreload" href="../_npm/d3-quadtree@3.0.1/aa5b35a8.js">
 <link rel="modulepreload" href="../_npm/d3-random@3.0.1/32c7fec2.js">
-<link rel="modulepreload" href="../_npm/d3-scale@4.0.2/4143aac9.js">
-<link rel="modulepreload" href="../_npm/d3-scale-chromatic@3.1.0/cf9b720b.js">
+<link rel="modulepreload" href="../_npm/d3-scale@4.0.2/2d9e63f3.js">
+<link rel="modulepreload" href="../_npm/d3-scale-chromatic@3.1.0/b6952b03.js">
 <link rel="modulepreload" href="../_npm/d3-selection@3.0.0/a4e530fb.js">
 <link rel="modulepreload" href="../_npm/d3-shape@3.2.0/be692bd9.js">
 <link rel="modulepreload" href="../_npm/d3-time@3.1.0/3a9ac1c1.js">
@@ -57,10 +57,10 @@
   
 <script type="module">
 
-import {define} from "../_observablehq/client.e840bffa.js";
+import {define} from "../_observablehq/client.e175090d.js";
 import {registerFile} from "../_observablehq/stdlib.97c14579.js";
 
-registerFile("../data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"../data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"../_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736623436363,"size":1549219});
+registerFile("../data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"../data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"../_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736623807996,"size":1549219});
 
 define({id: "84bbedac", outputs: ["initAll"], body: async () => {
 const {initAll} = await import("../_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.fe29c906.js");
@@ -73,10 +73,10 @@ const govuk_colour_palette = ["#F46A25", "#28A197", "#12436D", "#801650", "#3D3D
 return {govuk_colour_palette};
 }});
 
-define({id: "985a4f22", inputs: ["FileAttachment"], outputs: ["tradeTotals","spainTotals"], body: async (FileAttachment) => {
+define({id: "2c65bbfa", inputs: ["FileAttachment"], outputs: ["tradeTotals","partnerTotals"], body: async (FileAttachment) => {
 const tradeTotals = await FileAttachment("../data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
-const spainTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['ISO2'] === 'IN' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
-return {tradeTotals,spainTotals};
+const partnerTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['ISO2'] === 'IN' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
+return {tradeTotals,partnerTotals};
 }});
 
 define({id: "5b51f5ff", body: () => {
@@ -187,21 +187,21 @@ function table(data) {
 return {tradeValue,tradeBalance,table};
 }});
 
-define({id: "ece0190e", mode: "inline", inputs: ["tradeValue","spainTotals","display"], body: async (tradeValue,spainTotals,display) => {
+define({id: "3e0c0316", mode: "inline", inputs: ["tradeValue","partnerTotals","display"], body: async (tradeValue,partnerTotals,display) => {
 display(await(
-tradeValue(spainTotals)
+tradeValue(partnerTotals)
 ))
 }});
 
-define({id: "84ea47fb", mode: "inline", inputs: ["tradeBalance","spainTotals","display"], body: async (tradeBalance,spainTotals,display) => {
+define({id: "2096a6a9", mode: "inline", inputs: ["tradeBalance","partnerTotals","display"], body: async (tradeBalance,partnerTotals,display) => {
 display(await(
-tradeBalance(spainTotals)
+tradeBalance(partnerTotals)
 ))
 }});
 
-define({id: "e3cc505e", mode: "inline", inputs: ["table","spainTotals","display"], body: async (table,spainTotals,display) => {
+define({id: "214317e1", mode: "inline", inputs: ["table","partnerTotals","display"], body: async (table,partnerTotals,display) => {
 display(await(
-table(spainTotals)
+table(partnerTotals)
 ))
 }});
 
@@ -236,7 +236,7 @@ table(spainTotals)
 <!-- Constants -->
 <div class="observablehq observablehq--block"><!--:0bb69e6a:--></div>
 <!-- Data -->
-<div class="observablehq observablehq--block"><!--:985a4f22:--></div>
+<div class="observablehq observablehq--block"><!--:2c65bbfa:--></div>
 <!-- Input widgets -->
 <div class="observablehq observablehq--block"><!--:5b51f5ff:--></div>
 <!-- Charts -->
@@ -303,16 +303,16 @@ table(spainTotals)
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-half">
             <h5><span class="govuk-heading-s">Trade value</span></h5>
-            <observablehq-loading></observablehq-loading><!--:ece0190e:-->
+            <observablehq-loading></observablehq-loading><!--:3e0c0316:-->
           </div>
           <div class="govuk-grid-column-one-half">
             <h5><span class="govuk-heading-s">Trade balance</span></h5>
-            <observablehq-loading></observablehq-loading><!--:84ea47fb:-->
+            <observablehq-loading></observablehq-loading><!--:2096a6a9:-->
           </div>
         </div>
       </div>
       <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tabular-data">
-        <observablehq-loading></observablehq-loading><!--:e3cc505e:-->
+        <observablehq-loading></observablehq-loading><!--:214317e1:-->
       </div>
     </div>
   </div>
@@ -321,7 +321,7 @@ table(spainTotals)
 <footer id="observablehq-footer">
 <div>
 <div class="govuk-width-container">
-  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Saturday 11 January 2025 at 19:23:13 GMT.</p>
+  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Saturday 11 January 2025 at 19:29:26 GMT.</p>
 </div>
 <div class="govuk-footer">
   <div class="govuk-width-container">
