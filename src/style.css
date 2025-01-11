@@ -11,9 +11,15 @@
   --theme-foreground-faintest: #b1b4b6; /* faintest border color, e.g. almost white */
   --theme-foreground-focus: #1d70b8; /* emphasis foreground color, e.g. blue */
 }
-.card {
-  border-radius: 0; /* The design system doesn't tend to have rounded corners */
-  margin-top: 0;    /* More robust/expected/without hidden behaviour to use gov-uk margins */
+.taif-card {
+  background: none;
+  padding: 0;
+}
+@media (min-width: 40.0625em) {
+  .taif-card {
+    background: #f3f2f1;
+    padding: 20px;
+  }
 }
 
 #observablehq-main, #observablehq-header, #observablehq-footer, #observablehq-header ~ #observablehq-main {
@@ -57,7 +63,7 @@
   max-width: none;
   margin: 0px;
 }
-p, table, figure, figcaption, h1, h2, h3, h4, h5, h6, .katex-display {
+p, table, figure, figcaption, h1, h2, h3, h4, h5, h6, blockquote, ol, ul, .katex-display {
   max-width: none;
 }
 
@@ -85,7 +91,9 @@ hr {
   text-decoration-skip-ink: none;
 }
 .govuk-header__link[href]:focus,
-.govuk-header__link[href]:hover {
+.govuk-header__link[href]:hover,
+.govuk-tabs__tab[href]:focus,
+.govuk-tabs__tab[href]:hover {
   text-decoration: none;
 }
 .govuk-footer__link[href] {
@@ -99,6 +107,10 @@ hr {
 .govuk-footer__link[href]:hover {
   text-decoration-thickness: max(3px, .1875rem, .12em);
   text-decoration-skip-ink: none;
+}
+
+.govuk-tabs__panel {
+  background: white;
 }
 
 /* The DBT crest is 5px bigger than the GOV.UK design system expects */
