@@ -39,7 +39,7 @@ const spainTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['
 
 <!-- Charts -->
 ```js
-function trade(data) {
+function tradeValue(data) {
   return Plot.plot({
     subtitle: "",
     style: "font-size: 16px;",
@@ -137,25 +137,38 @@ function tradeBalance(data) {
       </div>
     </div>
   </div>
-  <h1 class="govuk-heading-m govuk-!-margin-top-2">Trade with {{ country.Display }}, in current prices (ONS)</h1>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
-      <div class="card">
-        <h2><span class="govuk-heading-s">UK trade with {{ country.Display }}</span></h2>
-        ${trade(spainTotals)}
+  <h2 class="govuk-heading-m govuk-!-margin-top-2">Trade with {{ country.Display }}, in current prices (ONS)</h1>
+  <div class="taif-card">
+    <h3 class="govuk-heading-s">UK trade with {{ country.Display }}</h2>
+    <div class="govuk-tabs govuk-!-margin-bottom-0" data-module="govuk-tabs">
+      <h4 class="govuk-tabs__title">
+        Contents
+      </h4>
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="govuk-tabs__tab" href="#chart">
+            Chart
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#tabular-data">
+            Tabular data
+          </a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel" id="chart">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half">
+            <h5><span class="govuk-heading-s">Trade value</span></h5>
+            ${tradeValue(spainTotals)}
+          </div>
+          <div class="govuk-grid-column-one-half">
+            <h5><span class="govuk-heading-s">Trade balance</span></h5>
+            ${tradeBalance(spainTotals)}
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="govuk-grid-column-one-half">
-      <div class="card">
-        <h2><span class="govuk-heading-s">UK trade balance with {{ country.Display }}</span></h2>
-        ${tradeBalance(spainTotals)}
-      </div>
-    </div>
-  </div>
-  <!-- -->
-  <div class="govuk-grid-row govuk-!-margin-bottom-4">
-    <div class="govuk-grid-column-full">
-      <div class="card">
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tabular-data">
         <h2><span class="govuk-heading-s">Data table</span></h2>
         ${Inputs.table(spainTotals, {
           columns: [
