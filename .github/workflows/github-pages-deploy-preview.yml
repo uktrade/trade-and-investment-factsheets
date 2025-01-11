@@ -1,8 +1,5 @@
 name: "GitHub pages: deploy preview"
 
-concurrency:
-  group: preview-${{ github.event.number }}
-
 on:
   pull_request:
     types:
@@ -48,6 +45,8 @@ jobs:
         run: |
           npm run build
       - name: Deploy preview
+        concurrency:
+          group: preview-${{ github.event.number }}
         uses: rossjrw/pr-preview-action@v1
         with:
           umbrella-dir: preview
