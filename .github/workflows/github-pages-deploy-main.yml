@@ -9,21 +9,29 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Install Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install dependencies
+      - name: Install R
         run: |
-          sudo apt install r-base libfontconfig1-dev libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+          curl --proto '=https' --tlsv1.3 -sSf https://raw.githubusercontent.com/eddelbuettel/r2u/6e130edb58db4d6328111e8eb2cc8583c1b07170/inst/scripts/add_cranapt_noble.sh | sudo bash
+      - name: Install Python packages
+        run: |
           pip install -r requirements.txt
-          sudo Rscript -e 'options(warn = 2); install.packages(c("tidyverse"), repos="https://cran.ma.imperial.ac.uk/")'
+      - name: Install R packages
+        run: |
+          sudo Rscript -e 'options(warn = 2); install.packages(c("tidyverse"))'
+      - name: Install Javascript packages
+        run: |
           npm ci
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
       - name: Make sure to not run Jekyll
         run: touch dist/.nojekyll
       - name: Set CNAME
