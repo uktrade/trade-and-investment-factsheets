@@ -47,12 +47,13 @@ function trade(data) {
     marginBottom: 40,
     marginTop: 30,
     x: {label: null, tickRotate: -45, type: "band"},
-    y: {label: "£ Billion", grid: true},
+    y: {label: "£ Billion", grid: true, nice: true},
     color: {
       range: govuk_colour_palette,
     },
     marks: [
       Plot.gridY(),
+      Plot.ruleY([0], {stroke: "#b1b4b6", strokeWidth: 4}),
       Plot.line(data, {
         y: d => d['Million'] / 1000.0,
         x: d => '' + d['Year'],
@@ -80,9 +81,10 @@ function tradeBalance(data) {
     marginBottom: 40,
     marginTop: 30,
     x: {label: null, tickRotate: -45, type: "band"},
-    y: {label: "£ Billion", grid: true},
+    y: {label: "£ Billion", grid: true, nice: true},
     marks: [ 
       Plot.gridY(),
+      Plot.ruleY([0], {stroke: "#b1b4b6", strokeWidth: 4}),
       Plot.barY(data, Plot.groupX({
         y: "sum",
       }, {
