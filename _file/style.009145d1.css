@@ -16,11 +16,6 @@
   margin-top: 0;    /* More robust/expected/without hidden behaviour to use gov-uk margins */
 }
 
-/* Have a wider site than the GOV.UK default. 1100px is what the GOV.UK Eleventy */
-/* site uses, and the public facing Data Workspace documentation */
-.govuk-width-container {
-  max-width: 1100px
-}
 #observablehq-main, #observablehq-header, #observablehq-footer, #observablehq-header ~ #observablehq-main {
   max-width: none;
   display: block;
