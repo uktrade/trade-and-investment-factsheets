@@ -43,7 +43,7 @@
     }
   }
 }
-@media (min-width: 1160px) {
+@media (min-width: 1020px) {
   .govuk-width-container {
     margin-right: auto;
     margin-left: auto;
@@ -63,7 +63,7 @@
   max-width: none;
   margin: 0px;
 }
-p, table, figure, figcaption, h1, h2, h3, h4, h5, h6, blockquote, ol, ul, .katex-display {
+body, p, table, figure, figcaption, h1, h2, h3, h4, h5, h6, blockquote, ol, ul, .katex-display {
   max-width: none;
 }
 
