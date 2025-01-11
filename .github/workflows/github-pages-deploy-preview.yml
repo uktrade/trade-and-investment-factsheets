@@ -32,9 +32,7 @@ jobs:
       - name: Fetch from / populate R package cache
         uses: actions/cache@v4
         with:
-          # No need to hash the lockfile for the cache key, because this is itself a cache that the
-          # below install step will pull a specific version of each package only if it needs to
-          key: renv-packages
+          key: renv-packages-${{ hashFiles('renv.lock') }}
           path: |
             ~/.cache/R/renv
       - name: Install R packages
