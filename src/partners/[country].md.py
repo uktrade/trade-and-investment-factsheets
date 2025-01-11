@@ -16,7 +16,7 @@ country = next(
 	(country for country in countries if country['Display'] == args.country and country['ISO3'] != ''),
 	next(country for country in countries if country['Display'] == args.country and country['ISO2'] != ''),
 )
-
+0
 # Process template to output md file for this country
 environment = Environment(
 	loader=FileSystemLoader("src/"),

@@ -23,7 +23,7 @@ theme: air
 
 <!-- Constants -->
 ```js
-const govuk_colour_palette = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"];
+const govuk_colour_palette = ["#F46A25", "#28A197", "#12436D", "#801650", "#3D3D3D", "#A285D1"];
 ```
 
 <!-- Data -->
@@ -42,7 +42,8 @@ const spainTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['
 function trade(data) {
   return Plot.plot({
     subtitle: "",
-    style: "font-size: 14px;",
+    style: "font-size: 16px;",
+    marginLeft: 40,
     marginBottom: 40,
     marginTop: 30,
     x: {label: null, tickRotate: -45, type: "band"},
@@ -57,7 +58,7 @@ function trade(data) {
         x: d => '' + d['Year'],
         z: d => d['flow'],
         stroke: d => d["flow"],
-        strokeWidth: 3,
+        strokeWidth: 5,
       }),
       Plot.line(data, Plot.groupX({
         y: "sum",
@@ -65,7 +66,7 @@ function trade(data) {
         y: d => d['Million'] / 1000.0,
         x: d => '' + d['Year'],
         stroke: 2,
-        strokeWidth: 3,
+        strokeWidth: 6,
       })),
     ]
   })
@@ -74,7 +75,8 @@ function trade(data) {
 function tradeBalance(data) {
   return Plot.plot({
     subtitle: "",
-    style: "font-size: 14px;",
+    style: "font-size: 16px;",
+    marginLeft: 40,
     marginBottom: 40,
     marginTop: 30,
     x: {label: null, tickRotate: -45, type: "band"},
@@ -86,7 +88,7 @@ function tradeBalance(data) {
       }, {
         x: d => '' + d['Year'],
         y: d => d['Million'] * (d['flow'] == 'total_import' ? -1 : 1) / 1000.0,
-        fill: govuk_colour_palette[0],
+        fill: govuk_colour_palette[2],
       })),
       Plot.ruleY([0], {stroke: "currentColor"}),
     ]
