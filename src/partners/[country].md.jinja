@@ -83,15 +83,28 @@ function tradeBalance(data, scaleName, scaleFactor) {
     marginTop: 30,
     x: {label: null, tickRotate: -45, type: "band"},
     y: {label: "£ " + scaleName, grid: true, nice: true},
+    color: {
+      range: [govuk_colour_palette[3], govuk_colour_palette[2]],
+      legend: true,
+    },
     marks: [ 
       Plot.gridY(),
       Plot.ruleY([0], {stroke: "#b1b4b6", strokeWidth: 4}),
       Plot.barY(data, Plot.groupX({
         y: "sum",
+        filter: grouped => grouped.reduce((partial, d) => partial + (d['flow'] == 'total_import' ? -1 : 1) * d['Million'], 0) >= 0.0,
       }, {
         x: d => '' + d['Year'],
         y: d => d['Million'] * (d['flow'] == 'total_import' ? -1 : 1) / scaleFactor,
-        fill: govuk_colour_palette[2],
+        fill: d => 'Surplus',
+      })),
+      Plot.barY(data, Plot.groupX({
+        y: "sum",
+        filter: grouped => grouped.reduce((partial, d) => partial + (d['flow'] == 'total_import' ? -1 : 1) * d['Million'], 0) < 0.0,
+      }, {
+        x: d => '' + d['Year'],
+        y: d => d['Million'] * (d['flow'] == 'total_import' ? -1 : 1) / scaleFactor,
+        fill: d => 'Deficit',
       })),
       Plot.ruleY([0], {stroke: "currentColor"}),
     ]
