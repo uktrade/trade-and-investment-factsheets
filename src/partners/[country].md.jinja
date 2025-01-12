@@ -19,6 +19,16 @@ const govuk_colour_palette = ["#F46A25", "#28A197", "#12436D", "#801650", "#3D3D
 ```js
 const tradeTotals = await FileAttachment("../data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
 const partnerTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['ISO2'] === '{{ country.ISO2 }}' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
+
+const dataByYearAndFlow = d3.group(partnerTotals, d => d.Year, d => d.flow);
+const max = Array.from(dataByYearAndFlow.values()).reduce((partial, row) => Math.max(
+  partial,
+  Math.abs(row.get('total_import')[0]['Million']),
+  Math.abs(row.get('total_export')[0]['Million']),
+  Math.abs(row.get('total_export')[0]['Million'] + row.get('total_import')[0]['Million']),
+  Math.abs(row.get('total_export')[0]['Million'] - row.get('total_import')[0]['Million']),
+), 0);
+const [scaleName, scaleFactor] = (max >= 1000.0) ? ['Billion', 1000.0] : ['Million', 1.0];
 ```
 
 <!-- Input widgets -->
@@ -28,7 +38,7 @@ const partnerTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row
 
 <!-- Charts -->
 ```js
-function tradeValue(data) {
+function tradeValue(data, scaleName, scaleFactor) {
   return Plot.plot({
     subtitle: "",
     style: "font-size: 16px;",
@@ -36,7 +46,7 @@ function tradeValue(data) {
     marginBottom: 40,
     marginTop: 30,
     x: {label: null, tickRotate: -45, type: "band"},
-    y: {label: "£ Billion", grid: true, nice: true},
+    y: {label: "£ " + scaleName, grid: true, nice: true},
     color: {
       range: govuk_colour_palette,
     },
@@ -44,7 +54,7 @@ function tradeValue(data) {
       Plot.gridY(),
       Plot.ruleY([0], {stroke: "#b1b4b6", strokeWidth: 4}),
       Plot.line(data, {
-        y: d => d['Million'] / 1000.0,
+        y: d => d['Million'] / scaleFactor,
         x: d => '' + d['Year'],
         z: d => d['flow'],
         stroke: d => d["flow"],
@@ -53,7 +63,7 @@ function tradeValue(data) {
       Plot.line(data, Plot.groupX({
         y: "sum",
       }, {
-        y: d => d['Million'] / 1000.0,
+        y: d => d['Million'] / scaleFactor,
         x: d => '' + d['Year'],
         stroke: 2,
         strokeWidth: 6,
@@ -62,7 +72,7 @@ function tradeValue(data) {
   })
 };
 
-function tradeBalance(data) {
+function tradeBalance(data, scaleName, scaleFactor) {
   return Plot.plot({
     subtitle: "",
     style: "font-size: 16px;",
@@ -70,7 +80,7 @@ function tradeBalance(data) {
     marginBottom: 40,
     marginTop: 30,
     x: {label: null, tickRotate: -45, type: "band"},
-    y: {label: "£ Billion", grid: true, nice: true},
+    y: {label: "£ " + scaleName, grid: true, nice: true},
     marks: [ 
       Plot.gridY(),
       Plot.ruleY([0], {stroke: "#b1b4b6", strokeWidth: 4}),
@@ -78,7 +88,7 @@ function tradeBalance(data) {
         y: "sum",
       }, {
         x: d => '' + d['Year'],
-        y: d => d['Million'] * (d['flow'] == 'total_import' ? -1 : 1) / 1000.0,
+        y: d => d['Million'] * (d['flow'] == 'total_import' ? -1 : 1) / scaleFactor,
         fill: govuk_colour_palette[2],
       })),
       Plot.ruleY([0], {stroke: "currentColor"}),
@@ -86,14 +96,13 @@ function tradeBalance(data) {
   })
 };
 
-function table(data) {
+function table(data, scaleName, scaleFactor) {
   const dataByYearAndFlow = d3.group(data, d => d.Year, d => d.flow);
-  console.log(dataByYearAndFlow)
   return htl.html`<table class="govuk-table">
     <caption class="govuk-table__caption govuk-table__caption--m">UK trade with {{ country.Display }}</caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Value in £bn</th>
+        <th scope="col" class="govuk-table__header">Value in £ ${scaleName}</th>
         ${Array.from(dataByYearAndFlow.keys()).map((year) =>
           htl.html`<th scope="col" class="govuk-table__header govuk-table__header--numeric">${year}</th>`
         )}
@@ -103,25 +112,25 @@ function table(data) {
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Total trade</th>
         ${Array.from(dataByYearAndFlow.entries()).map((entry) =>
-          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million'] + entry[1].get('total_import')[0]['Million']) / 1000.0).toFixed(1)}</td>`
+          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million'] + entry[1].get('total_import')[0]['Million']) / scaleFactor).toFixed(1)}</td>`
         )}
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Exports</th>
         ${Array.from(dataByYearAndFlow.entries()).map((entry) =>
-          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million']) / 1000.0).toFixed(1)}</td>`
+          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million']) / scaleFactor).toFixed(1)}</td>`
         )}
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Imports</th>
         ${Array.from(dataByYearAndFlow.entries()).map((entry) =>
-          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_import')[0]['Million']) / 1000.0).toFixed(1)}</td>`
+          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_import')[0]['Million']) / scaleFactor).toFixed(1)}</td>`
         )}
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Trade balance</th>
         ${Array.from(dataByYearAndFlow.entries()).map((entry) =>
-          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million'] - entry[1].get('total_import')[0]['Million']) / 1000.0).toFixed(1)}</td>`
+          htl.html`<td class="govuk-table__cell govuk-table__cell--numeric">${((entry[1].get('total_export')[0]['Million'] - entry[1].get('total_import')[0]['Million']) / scaleFactor).toFixed(1)}</td>`
         )}
       </tr>
     </tbody>
@@ -192,16 +201,16 @@ function table(data) {
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-half">
             <h5><span class="govuk-heading-s">Trade value</span></h5>
-            ${tradeValue(partnerTotals)}
+            ${tradeValue(partnerTotals, scaleName, scaleFactor)}
           </div>
           <div class="govuk-grid-column-one-half">
             <h5><span class="govuk-heading-s">Trade balance</span></h5>
-            ${tradeBalance(partnerTotals)}
+            ${tradeBalance(partnerTotals, scaleName, scaleFactor)}
           </div>
         </div>
       </div>
       <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tabular-data">
-        ${table(partnerTotals)}
+        ${table(partnerTotals, scaleName, scaleFactor)}
       </div>
     </div>
   </div>
