@@ -49,6 +49,8 @@ function tradeValue(data, scaleName, scaleFactor) {
     y: {label: "£ " + scaleName, grid: true, nice: true},
     color: {
       range: govuk_colour_palette,
+      legend: true,
+      tickFormat: d => d == 'total_export' ? 'Exports' : d == 'total_import' ? 'Imports' : d,
     },
     marks: [
       Plot.gridY(),
@@ -62,10 +64,10 @@ function tradeValue(data, scaleName, scaleFactor) {
       }),
       Plot.line(data, Plot.groupX({
         y: "sum",
+        stroke: t => 'Total trade',
       }, {
         y: d => d['Million'] / scaleFactor,
         x: d => '' + d['Year'],
-        stroke: 2,
         strokeWidth: 6,
       })),
     ]
