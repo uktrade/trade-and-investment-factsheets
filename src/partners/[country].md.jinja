@@ -81,6 +81,7 @@ function introText(tradeTotals, dataByYearAndFlow, scaleName, scaleFactor) {
   });
 
   const index = allPartnerTotals.indexOf(totalTradeLatestYearNoScale) + 1;
+  const jointsAtIndex = allPartnerTotals.filter(value => value === totalTradeLatestYearNoScale).length;
   const partnerPercentage = totalTradeLatestYearNoScale / allUKTradeTotal * 100;
 
   return htl.html`
@@ -89,7 +90,7 @@ function introText(tradeTotals, dataByYearAndFlow, scaleName, scaleFactor) {
       <li>Total UK exports to {{ country.Display }} amounted to £${exportsLatestYear.toFixed(1)} ${scaleName.toLowerCase()} in ${latestYear} (${exportsDifference >= 0 ? 'an increase' : 'a decrease'} of ${exportsAbsDifferencePercentage.toFixed(1)}% or £${exportsAbsDifference.toFixed(1)} ${scaleName.toLowerCase()} in current prices, compared to ${previousYear});</li>
       <li>Total UK imports from {{ country.Display }} amounted to £${importsLatestYear.toFixed(1)} ${scaleName.toLowerCase()} in ${latestYear} (${importsDifference >= 0 ? 'an increase' : 'a decrease'} of ${importsAbsDifferencePercentage.toFixed(1)}% or £${importsAbsDifference.toFixed(1)} ${scaleName.toLowerCase()} in current prices, compared to ${previousYear}).</li>
     </ul>
-    <p class="govuk-body">{{ country.Display }} was the UK’s ${index > 1 ? ordinal(index) + ' ' : ''}largest trading partner in ${latestYear} accounting for ${Number(partnerPercentage.toPrecision(2))}% of total UK trade.</p>`
+    <p class="govuk-body">{{ country.Display }} was the UK’s ${jointsAtIndex > 1 ? 'joint ' : ''}${index > 1 ? ordinal(index) + ' ' : ''}largest trading partner in ${latestYear} accounting for ${Number(partnerPercentage.toPrecision(2))}% of total UK trade.</p>`
 }
 
 function tradeValue(data, scaleName, scaleFactor) {
