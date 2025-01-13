@@ -49,7 +49,7 @@ function tradeValue(data, scaleName, scaleFactor) {
     y: {label: "£ " + scaleName, grid: true, nice: true},
     color: {
       range: govuk_colour_palette,
-      domain: ["Total trade", "Exports", "Imports"],
+      domain: ["Total trade", "total_export", "total_import"],
       legend: true,
       tickFormat: d => d == 'total_export' ? 'Exports' : d == 'total_import' ? 'Imports' : d,
     },
