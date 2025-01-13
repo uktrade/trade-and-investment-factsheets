@@ -115,7 +115,7 @@ function tradeBalance(data, scaleName, scaleFactor) {
 
 function table(data, scaleName, scaleFactor) {
   const dataByYearAndFlow = d3.group(data, d => d.Year, d => d.flow);
-  return htl.html`<table class="govuk-table">
+  return htl.html`<table class="govuk-table govuk-table--small-text-until-tablet">
     <caption class="govuk-table__caption govuk-table__caption--m">UK trade with {{ country.Display }}</caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
