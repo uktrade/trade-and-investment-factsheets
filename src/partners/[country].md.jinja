@@ -54,8 +54,8 @@ function introText(dataByYearAndFlow, scaleName, scaleFactor) {
   const exportsAbsDifference = Math.abs(totalTradeDifference);
   const exportsAbsDifferencePercentage = (exportsAbsDifference / exportsPreviousYear) * 100;
 
-  const importsLatestYear = dataByYearAndFlow.get(latestYear).get('total_export')[0]['Million'] / scaleFactor;
-  const importsPreviousYear = dataByYearAndFlow.get(previousYear).get('total_export')[0]['Million'] / scaleFactor;
+  const importsLatestYear = dataByYearAndFlow.get(latestYear).get('total_import')[0]['Million'] / scaleFactor;
+  const importsPreviousYear = dataByYearAndFlow.get(previousYear).get('total_import')[0]['Million'] / scaleFactor;
   const importsDifference = importsLatestYear - importsPreviousYear
   const importsAbsDifference = Math.abs(totalTradeDifference);
   const importsAbsDifferencePercentage = (importsAbsDifference / importsPreviousYear) * 100;
