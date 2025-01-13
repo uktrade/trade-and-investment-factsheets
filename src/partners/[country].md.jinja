@@ -49,6 +49,7 @@ function tradeValue(data, scaleName, scaleFactor) {
     y: {label: "£ " + scaleName, grid: true, nice: true},
     color: {
       range: govuk_colour_palette,
+      domain: ["Total trade", "Exports", "Imports"],
       legend: true,
       tickFormat: d => d == 'total_export' ? 'Exports' : d == 'total_import' ? 'Imports' : d,
     },
@@ -85,6 +86,7 @@ function tradeBalance(data, scaleName, scaleFactor) {
     y: {label: "£ " + scaleName, grid: true, nice: true},
     color: {
       range: [govuk_colour_palette[3], govuk_colour_palette[2]],
+      domain: ["Deficit", "Surplus"],
       legend: true,
     },
     marks: [ 
