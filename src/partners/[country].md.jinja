@@ -17,7 +17,9 @@ const govuk_colour_palette = ["#F46A25", "#28A197", "#12436D", "#801650", "#3D3D
 
 <!-- Data -->
 ```js
-const tradeTotals = await FileAttachment("../data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true});
+// TODO: Check if it's correct to ignore partners with digits in their ISO2 code
+// These are totals rows, or other small organisations that, at least for now for the POC, we're not including
+const tradeTotals = (await FileAttachment("../data/uk-total-trade-all-countries-seasonally-adjusted.csv").csv({typed: true})).filter(row => !/\d/.test(row['ISO2']));
 const partnerTotals = await tradeTotals.filter(row => row['Year'] >= 2014 && row['ISO2'] === '{{ country.ISO2 }}' && (row['flow'] == 'total_import' || row['flow'] == 'total_export'));
 
 const dataByYearAndFlow = d3.group(partnerTotals, d => d.Year, d => d.flow);
@@ -78,7 +80,7 @@ function introText(tradeTotals, dataByYearAndFlow, scaleName, scaleFactor) {
       return b - a;
   });
 
-  const index = allPartnerTotals.indexOf(totalTradeLatestYearNoScale);
+  const index = allPartnerTotals.indexOf(totalTradeLatestYearNoScale) + 1;
   const partnerPercentage = totalTradeLatestYearNoScale / allUKTradeTotal * 100;
 
   return htl.html`
@@ -87,7 +89,7 @@ function introText(tradeTotals, dataByYearAndFlow, scaleName, scaleFactor) {
       <li>Total UK exports to {{ country.Display }} amounted to £${exportsLatestYear.toFixed(1)} ${scaleName.toLowerCase()} in ${latestYear} (${exportsDifference >= 0 ? 'an increase' : 'a decrease'} of ${exportsAbsDifferencePercentage.toFixed(1)}% or £${exportsAbsDifference.toFixed(1)} ${scaleName.toLowerCase()} in current prices, compared to ${previousYear});</li>
       <li>Total UK imports from {{ country.Display }} amounted to £${importsLatestYear.toFixed(1)} ${scaleName.toLowerCase()} in ${latestYear} (${importsDifference >= 0 ? 'an increase' : 'a decrease'} of ${importsAbsDifferencePercentage.toFixed(1)}% or £${importsAbsDifference.toFixed(1)} ${scaleName.toLowerCase()} in current prices, compared to ${previousYear}).</li>
     </ul>
-    <p class="govuk-body">{{ country.Display }} was the UK’s ${ordinal(index)} largest trading partner in ${latestYear} accounting for ${Number(partnerPercentage.toPrecision(2))}% of total UK trade.</p>`
+    <p class="govuk-body">{{ country.Display }} was the UK’s ${index > 1 ? ordinal(index) + ' ' : ''}largest trading partner in ${latestYear} accounting for ${Number(partnerPercentage.toPrecision(2))}% of total UK trade.</p>`
 }
 
 function tradeValue(data, scaleName, scaleFactor) {
