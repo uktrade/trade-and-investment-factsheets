@@ -60,7 +60,7 @@
 import {define} from "../_observablehq/client.3d9d71b2.js";
 import {registerFile} from "../_observablehq/stdlib.97c14579.js";
 
-registerFile("../data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"../data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"../_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736749021754,"size":1549219});
+registerFile("../data/uk-total-trade-all-countries-seasonally-adjusted.csv", {"name":"../data/uk-total-trade-all-countries-seasonally-adjusted.csv","mimeType":"text/csv","path":"../_file/data/uk-total-trade-all-countries-seasonally-adjusted.158a092e.csv","lastModified":1736749918264,"size":1549219});
 
 define({id: "84bbedac", outputs: ["initAll"], body: async () => {
 const {initAll} = await import("../_npm/govuk-frontend@5.8.0/dist/govuk/govuk-frontend.min.fe29c906.js");
@@ -93,7 +93,7 @@ define({id: "5b51f5ff", body: () => {
 // None at the moment
 }});
 
-define({id: "5dfe3fb2", inputs: ["Plot","govuk_colour_palette","d3","htl"], outputs: ["tradeValue","tradeBalance","table"], body: (Plot,govuk_colour_palette,d3,htl) => {
+define({id: "1da24993", inputs: ["Plot","govuk_colour_palette","d3","htl"], outputs: ["tradeValue","tradeBalance","table"], body: (Plot,govuk_colour_palette,d3,htl) => {
 function tradeValue(data, scaleName, scaleFactor) {
   return Plot.plot({
     subtitle: "",
@@ -105,7 +105,7 @@ function tradeValue(data, scaleName, scaleFactor) {
     y: {label: "£ " + scaleName, grid: true, nice: true},
     color: {
       range: govuk_colour_palette,
-      domain: ["Total trade", "Exports", "Imports"],
+      domain: ["Total trade", "total_export", "total_import"],
       legend: true,
       tickFormat: d => d == 'total_export' ? 'Exports' : d == 'total_import' ? 'Imports' : d,
     },
@@ -266,7 +266,7 @@ table(partnerTotals, scaleName, scaleFactor)
 <!-- Input widgets -->
 <div class="observablehq observablehq--block"><!--:5b51f5ff:--></div>
 <!-- Charts -->
-<div class="observablehq observablehq--block"><!--:5dfe3fb2:--></div>
+<div class="observablehq observablehq--block"><!--:1da24993:--></div>
 <!-- HTML combining all the above -->
 <div class="govuk-width-container">
   <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
@@ -347,7 +347,7 @@ table(partnerTotals, scaleName, scaleFactor)
 <footer id="observablehq-footer">
 <div>
 <div class="govuk-width-container">
-  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Monday 13 January 2025 at 06:16:17 GMT.</p>
+  <p class="govuk-body-s govuk-!-margin-bottom-7">Data source: <a class="govuk-link govuk-link--no-visited-state" href="https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted" target="_self" rel="noopener noreferrer">"UK total trade: all countries, seasonally adjusted" published by the Office for National Statistics (ONS)</a> as of Monday 13 January 2025 at 06:31:15 GMT.</p>
 </div>
 <div class="govuk-footer">
   <div class="govuk-width-container">
