@@ -53,8 +53,8 @@ function introText(tradeTotals, dataByYearAndFlow, scaleName, scaleFactor) {
   const latestYear = Math.max(...Array.from(dataByYearAndFlow.keys()));
   const previousYear = latestYear - 1;
 
-  const totalTradeLatestYear = Array.from(dataByYearAndFlow.get(latestYear).values()).reduce((partial, d) => d[0]['Million'] / scaleFactor, 0);
-  const totalTradePreviousYear = Array.from(dataByYearAndFlow.get(previousYear).values()).reduce((partial, d) => d[0]['Million'] / scaleFactor, 0);
+  const totalTradeLatestYear = Array.from(dataByYearAndFlow.get(latestYear).values()).reduce((partial, d) => partial + d[0]['Million'] / scaleFactor, 0);
+  const totalTradePreviousYear = Array.from(dataByYearAndFlow.get(previousYear).values()).reduce((partial, d) => partial + d[0]['Million'] / scaleFactor, 0);
   const totalTradeDifference = totalTradeLatestYear - totalTradePreviousYear;
   const totalTradeAbsDifference = Math.abs(totalTradeDifference);
   const totalTradeAbsDifferencePercentage = (totalTradeAbsDifference / totalTradePreviousYear) * 100;
@@ -62,13 +62,13 @@ function introText(tradeTotals, dataByYearAndFlow, scaleName, scaleFactor) {
   const exportsLatestYear = dataByYearAndFlow.get(latestYear).get('total_export')[0]['Million'] / scaleFactor;
   const exportsPreviousYear = dataByYearAndFlow.get(previousYear).get('total_export')[0]['Million'] / scaleFactor;
   const exportsDifference = exportsLatestYear - exportsPreviousYear
-  const exportsAbsDifference = Math.abs(totalTradeDifference);
+  const exportsAbsDifference = Math.abs(exportsDifference);
   const exportsAbsDifferencePercentage = (exportsAbsDifference / exportsPreviousYear) * 100;
 
   const importsLatestYear = dataByYearAndFlow.get(latestYear).get('total_import')[0]['Million'] / scaleFactor;
   const importsPreviousYear = dataByYearAndFlow.get(previousYear).get('total_import')[0]['Million'] / scaleFactor;
   const importsDifference = importsLatestYear - importsPreviousYear
-  const importsAbsDifference = Math.abs(totalTradeDifference);
+  const importsAbsDifference = Math.abs(importsDifference);
   const importsAbsDifferencePercentage = (importsAbsDifference / importsPreviousYear) * 100;
 
   const totalTradeLatestYearNoScale = Array.from(dataByYearAndFlow.get(latestYear).values()).reduce((partial, d) => partial + d[0]['Million'], 0);
