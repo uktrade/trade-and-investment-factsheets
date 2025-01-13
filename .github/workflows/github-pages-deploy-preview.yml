@@ -32,7 +32,7 @@ jobs:
       - name: Setup cache of R packages
         uses: actions/cache@v4
         with:
-          key: renv-packages-${{ hashFiles('renv.lock') }}
+          key: r-packages-${{ hashFiles('renv.lock') }}
           path: |
             ~/.cache/R/renv
       - name: Install R packages
