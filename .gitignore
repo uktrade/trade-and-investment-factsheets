@@ -132,6 +132,3 @@ dist
 
 # macOS
 .DS_Store
-
-# Renv
-renv/*
