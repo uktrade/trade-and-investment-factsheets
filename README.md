@@ -154,13 +154,10 @@ The project structure follows the usual Observable Framework structure. An examp
 
 1. Add/remove the packages from [DESCRIPTION](./DESCRIPTION).
 
-2. Generate a new [renv.lock](./renv.lock) based on the packages listed in [DESCRIPTION](./DESCRIPTION).
-
-> [!WARNING]  
-> This will uninstall all packages from your local R environment, although they should remain in the renv cache.
+2. Update the [renv.lock](./renv.lock) based on the packages listed in [DESCRIPTION](./DESCRIPTION).
 
    ```bash
-   Rscript -e 'if (file.exists("renv.lock")) {file.remove("renv.lock")}; remove.packages(installed.packages(priority="NA")[,1]); install.packages("renv", repos="https://cloud.r-project.org"); renv::settings$snapshot.type("explicit"); renv::install(library=tempdir(), lock=TRUE)'
+   Rscript -e 'renv::init(); renv::install(); renv::snapshot(type="explicit");'
    ```
 
 3. Commit both the updated [DESCRIPTION](./DESCRIPTION) and [renv.lock](./renv.lock) to a new branch.

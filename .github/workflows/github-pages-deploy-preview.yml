@@ -37,8 +37,7 @@ jobs:
             ~/.cache/R/renv
       - name: Install R packages
         run: |
-          Rscript -e 'options(warn = 2); install.packages("renv", repos="https://cloud.r-project.org")'
-          Rscript -e 'options(warn = 2); renv::restore()'
+          Rscript -e 'options(warn = 2); renv::init(); renv::restore();'
       - name: Install Javascript packages
         run: |
           npm ci
