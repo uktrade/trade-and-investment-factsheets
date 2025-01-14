@@ -152,22 +152,19 @@ The project structure follows the usual Observable Framework structure. An examp
 
 ## Updating R packages
 
-1. Make sure to have `renv` installed locally.
+1. Add/remove the packages from [DESCRIPTION](./DESCRIPTION).
+
+2. Generate a new [renv.lock](./renv.lock) based on the packages listed in [DESCRIPTION](./DESCRIPTION).
+
+> [!WARNING]  
+> This will uninstall all packages from your local R environment, although they should remain in the renv cache.
 
    ```bash
-   Rscript -e 'options(warn = 2); install.packages("renv", repos="https://cloud.r-project.org")'
+   Rscript -e 'if (file.exists("renv.lock")) {file.remove("renv.lock")}; remove.packages(installed.packages(priority="NA")[,1]); install.packages("renv", repos="https://cloud.r-project.org"); renv::settings$snapshot.type("explicit"); renv::install(library=tempdir(), lock=TRUE)'
    ```
 
-2. Add/remove the packages from [DESCRIPTION](./DESCRIPTION).
+3. Commit both the updated [DESCRIPTION](./DESCRIPTION) and [renv.lock](./renv.lock) to a new branch.
 
-3. Generate a new [renv.lock](./renv.lock) based on the packages listed in [DESCRIPTION](./DESCRIPTION).
+4. Raise a PR to merge the new branch into the main branch, and make sure its actions and preview work without error and as expected.
 
-   ```bash
-   Rscript -e 'if (file.exists("renv.lock")) {file.remove("renv.lock")}; renv::settings$snapshot.type("explicit"); renv::install(library=tempdir(), lock=TRUE)'
-   ```
-
-4. Commit both the updated [DESCRIPTION](./DESCRIPTION) and [renv.lock](./renv.lock) to a new branch.
-
-5. Raise a PR to merge the new branch into the main branch, and make sure its actions and preview work without error and as expected.
-
-6. Merge the PR.
+5. Merge the PR.
