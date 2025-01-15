@@ -1,54 +1,128 @@
+# packages
 library(httr)
-library(jsonlite)
-library(readxl)
+library(openxlsx)
 library(tidyverse)
 
-product <- c("total", "goods", "services")
-sheet_names <- c("1 Total Trade by Country - A", "3 TiG by Country - A", "5 TiS by Country - A")
+# consts
+product_names <- c(
+  "total",
+  "goods",
+  "services"
+  )
 
-SITCcodes <- read_excel("src/data/sitc-codes.xlsx", skip = 1)
-SITCcodes %>% filter(Keep == "Y") -> twodigits
-SITCcodes %>% filter(Toptier == "Y") -> onedigit
+sheet_names <- c(
+  "1 Total Trade by Country - A",
+  "3 TiG by Country - A",
+  "5 TiS by Country - A"
+  )
 
-country_names <- read.csv("src/data/country-names.csv", stringsAsFactors = FALSE, na.strings = "")
+country_names_loc <- "src/data/country-names.csv"
 
 url_ons_TQ <- paste0(
   "https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments/datasets/",
   "uktotaltradeallcountriesseasonallyadjusted/data")
-webpage <- fromJSON(url_ons_TQ)
-webpage <- webpage$datasets$uri[1]
-linkbit <- "/tradequarterlyq224seasonallyadjustedfinal1.xlsx"
 
-url_ons_TQ <- paste0("https://www.ons.gov.uk/file?uri=", webpage, linkbit)
-invisible(GET(url_ons_TQ, write_disk(tf <- file.path(tempdir(), "temp_file.xlsx"), 
-                           overwrite = T)))
+link_bit <- "/tradequarterlyq224seasonallyadjustedfinal1.xlsx"
 
-ons_trade_annual <- data.frame()
+# functions
+get_web_page <- function(url) {
 
-for (i in seq(1,3)){
-  df <- read_excel(tf, sheet = sheet_names[i], skip = 3)
-  colnames(df)[1] <- "ISO2"
-  colnames(df)[2] <- "Countries"
-  df <- filter(df, !is.na(Countries))
-  imports_line <- which(df[,1] == "Country Code")
-  ending_line <- dim(df)[1]
-  
-  df$flow <- NA
-  df$flow <- as.character(df$flow)
-  df[imports_line:ending_line,'flow'] <- paste0(product[i],"_import") 
-  df[1:(imports_line-1),'flow'] <-  paste0(product[i],"_export")
-  
-  df <- filter(df, !is.na(`ISO2`))
-  df <- filter(df, `ISO2` != "-")
-  df <- pivot_longer(data = df, names_to = "Year", values_to = "Million", -c("ISO2","Countries", "flow"))
-  df$Million <- as.numeric(df$Million)
-  
-  ons_trade_annual <- rbind(ons_trade_annual, df) 
+  web_page_ <- url %>%
+    jsonlite::fromJSON() %>%
+    purrr::pluck("datasets") %>%
+    purrr::pluck("uri") %>%
+    purrr::pluck(1)
+
+  return(web_page_)
+
 }
 
-ons_trade_annual <- filter(.data = ons_trade_annual, Countries != "Country")
-ons_trade_annual %>% left_join(country_names, by = "ISO2") %>%
-  select(Country, ISO2, ISO3, Year, flow, Million) -> ons_trade_annual
-ons_trade_annual %>% pivot_wider(names_from = flow, values_from = Million) -> ons_NSA_trade_annual
+get_file_path <- function(url) {
 
-cat(format_csv(ons_trade_annual))
+  response_object_ <- httr::GET(
+    paste0(
+      "https://www.ons.gov.uk/file?uri=",
+      web_page,
+      link_bit
+    )
+  )
+
+  file_path_ <- response_object_ %>%
+    purrr::pluck(1) %>%
+    paste0()
+
+  return(file_path_)
+
+}
+
+clean_trade_data <- function(file_path, sheet_name, product_name) {
+  
+  df_ <- openxlsx::read.xlsx(
+      file_path,
+      sheet = sheet_name,
+      startRow = 4
+    ) %>%
+    dplyr::rename(
+      ISO2 = Country.Code,
+      Countries = Country
+      ) %>%
+    dplyr::filter(!is.na(Countries)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      row_id = dplyr::row_number(),
+      imports_line = dplyr::if_else(
+        ISO2 == "Country Code", row_id, NA_integer_
+      )
+    ) %>%
+    tidyr::fill(imports_line, .direction = "updown") %>%
+    mutate(
+      flow = dplyr::if_else(
+          row_id < imports_line,
+          paste0(product_name, "_export"),
+          paste0(product_name, "_import"),
+          missing = NA_character_
+        )
+      ) %>%
+    dplyr::filter(!is.na(`ISO2`)) %>%
+    dplyr::filter(`ISO2` != "-") %>%
+    dplyr::select(-c("row_id", "imports_line")) %>%
+    tidyr::pivot_longer(
+      names_to = "Year",
+      values_to = "Million",
+      -c("ISO2", "Countries", "flow")) %>%
+    dplyr::mutate(Million = as.numeric(Million))
+
+  return(df_)
+
+}
+
+# reading
+
+## Country Names
+country_names <- readr::read_csv(
+  country_names_loc,
+  show_col_types = FALSE,
+  na = ""
+  )
+
+## Trade Data
+web_page <- get_web_page(url_ons_TQ)
+
+file_path <- paste0(
+  "https://www.ons.gov.uk/file?uri=",
+  web_page,
+  link_bit
+  ) %>%
+  get_file_path()
+
+# processing
+ons_trade_annual <- product_names %>%
+  seq_along() %>%
+  purrr::map(\(x) { clean_trade_data(file_path, sheet_names[x], product_names[x]) }) %>%
+  purrr::reduce(dplyr::bind_rows) %>%
+  dplyr::filter(Countries != "Country") %>%
+  left_join(country_names, by = "ISO2") %>%
+  select(Country, ISO2, ISO3, Year, flow, Million)
+
+# stdout
+ons_trade_annual %>% format_csv() %>% cat()
