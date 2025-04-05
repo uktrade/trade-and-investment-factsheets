@@ -1,6 +1,7 @@
 # packages
 library(httr)
 library(openxlsx)
+library(rvest)
 library(tidyverse)
 
 # consts
@@ -34,24 +35,6 @@ get_web_page <- function(url) {
     purrr::pluck(1)
 
   return(web_page_)
-
-}
-
-get_file_path <- function(url) {
-
-  response_object_ <- httr::GET(
-    paste0(
-      "https://www.ons.gov.uk/file?uri=",
-      web_page,
-      link_bit
-    )
-  )
-
-  file_path_ <- response_object_ %>%
-    purrr::pluck(1) %>%
-    paste0()
-
-  return(file_path_)
 
 }
 
@@ -108,12 +91,10 @@ country_names <- readr::read_csv(
 ## Trade Data
 web_page <- get_web_page(url_ons_TQ)
 
-file_path <- paste0(
-  "https://www.ons.gov.uk/file?uri=",
-  web_page,
-  link_bit
-  ) %>%
-  get_file_path()
+file_paths <- read_html(paste0('https://www.ons.gov.uk', web_page)) %>%
+  html_elements('a[href$=".xlsx"]') %>%
+  html_attr("href")
+file_path <- paste0('https://www.ons.gov.uk', file_paths[1])
 
 # processing
 ons_trade_annual <- product_names %>%
