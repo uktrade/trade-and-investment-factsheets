@@ -1,6 +1,7 @@
 library(httr)
 library(jsonlite)
 library(readxl)
+library(rvest)
 library(tidyverse)
 
 product <- c("total", "goods", "services")
@@ -17,11 +18,14 @@ url_ons_TQ <- paste0(
   "uktotaltradeallcountriesseasonallyadjusted/data")
 webpage <- fromJSON(url_ons_TQ)
 webpage <- webpage$datasets$uri[1]
-linkbit <- "/tradequarterlyq224seasonallyadjustedfinal1.xlsx"
 
-url_ons_TQ <- paste0("https://www.ons.gov.uk/file?uri=", webpage, linkbit)
-invisible(GET(url_ons_TQ, write_disk(tf <- file.path(tempdir(), "temp_file.xlsx"), 
-                           overwrite = T)))
+dataset_page_url <- paste0('https://www.ons.gov.uk', webpage)
+links <- read_html(dataset_page_url) %>%
+  html_elements('a[href$=".xlsx"]') %>% 
+  html_attr("href")
+link <- paste0('https://www.ons.gov.uk', links[1])
+
+invisible(GET(link, write_disk(tf <- file.path(tempdir(), "temp_file.xlsx"), overwrite = T)))
 
 ons_trade_annual <- data.frame()
 
