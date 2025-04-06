@@ -26,17 +26,6 @@ url_ons_TQ <- paste0(
 link_bit <- "/tradequarterlyq224seasonallyadjustedfinal1.xlsx"
 
 # functions
-get_web_page <- function(url) {
-
-  web_page_ <- url %>%
-    jsonlite::fromJSON() %>%
-    purrr::pluck("datasets") %>%
-    purrr::pluck("uri") %>%
-    purrr::pluck(1)
-
-  return(web_page_)
-
-}
 
 clean_trade_data <- function(file_path, sheet_name, product_name) {
   
@@ -89,9 +78,11 @@ country_names <- readr::read_csv(
   )
 
 ## Trade Data
-web_page <- get_web_page(url_ons_TQ)
 
-file_paths <- read_html(paste0('https://www.ons.gov.uk', web_page)) %>%
+file_paths <- read_html(paste0(
+    'https://www.ons.gov.uk',
+    '/economy/nationalaccounts/balanceofpayments/datasets/uktotaltradeallcountriesseasonallyadjusted'
+  )) %>%
   html_elements('a[href$=".xlsx"]') %>%
   html_attr("href")
 file_path <- paste0('https://www.ons.gov.uk', file_paths[1])
