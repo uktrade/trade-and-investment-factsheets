@@ -119,7 +119,11 @@ hr {
 /* just seem to "peek" over the edge) */
 .dbt-header__logotype {
   margin-bottom: -5px;
+  padding-right: 12px;
+  border-right: 2px solid #fff;
+  margin-right: 3px;
 }
+
 
 /* GOV.UK design system copyright crest is expected to be in assets/, but it wasn't */
 /* clear how to get the logos there. And trying to oberride background-image: to a another */
