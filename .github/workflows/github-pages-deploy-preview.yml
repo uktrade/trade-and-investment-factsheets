@@ -1,54 +1,54 @@
-name: "GitHub pages: deploy preview"
+# name: "GitHub pages: deploy preview"
 
-concurrency:
-  group: preview-${{ github.event.number }}
+# concurrency:
+#   group: preview-${{ github.event.number }}
 
-on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
+# on:
+#   pull_request:
+#     types:
+#       - opened
+#       - reopened
+#       - synchronize
 
-jobs:
-  build:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Ubuntu packages
-        run: |
-          sudo apt update
-          sudo apt install libfontconfig1-dev libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
-      - name: Install Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install Python packages
-        run: |
-          pip install -r requirements.txt
-      - name: Install R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: 'renv'
-      - name: Setup cache of R packages
-        uses: actions/cache@v4
-        with:
-          key: r-packages-${{ hashFiles('renv.lock') }}
-          path: |
-            ~/.cache/R/renv
-      - name: Install R packages
-        run: |
-          Rscript -e 'options(warn = 2); renv::init(); renv::restore();'
-      - name: Install Javascript packages
-        run: |
-          npm ci
-      - name: Build
-        run: |
-          npm run build
-      - name: Deploy preview
-        uses: rossjrw/pr-preview-action@v1
-        with:
-          umbrella-dir: preview
-          source-dir: dist
-          custom-url: trade-and-investment-factsheets.docs.trade.gov.uk
+# jobs:
+#   build:
+#     runs-on: ubuntu-24.04
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Install Ubuntu packages
+#         run: |
+#           sudo apt update
+#           sudo apt install libfontconfig1-dev libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+#       - name: Install Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.11'
+#       - name: Install Python packages
+#         run: |
+#           pip install -r requirements.txt
+#       - name: Install R
+#         uses: r-lib/actions/setup-r@v2
+#         with:
+#           r-version: 'renv'
+#       - name: Setup cache of R packages
+#         uses: actions/cache@v4
+#         with:
+#           key: r-packages-${{ hashFiles('renv.lock') }}
+#           path: |
+#             ~/.cache/R/renv
+#       - name: Install R packages
+#         run: |
+#           Rscript -e 'options(warn = 2); renv::init(); renv::restore();'
+#       - name: Install Javascript packages
+#         run: |
+#           npm ci
+#       - name: Build
+#         run: |
+#           npm run build
+#       - name: Deploy preview
+#         uses: rossjrw/pr-preview-action@v1
+#         with:
+#           umbrella-dir: preview
+#           source-dir: dist
+#           custom-url: trade-and-investment-factsheets.docs.trade.gov.uk

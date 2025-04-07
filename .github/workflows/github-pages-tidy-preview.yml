@@ -1,22 +1,22 @@
-name: "GitHub pages: tidy up preview"
+# name: "GitHub pages: tidy up preview"
 
-concurrency:
-  group: preview-${{ github.event.number }}
+# concurrency:
+#   group: preview-${{ github.event.number }}
 
-on:
-  pull_request:
-    types:
-      - closed
+# on:
+#   pull_request:
+#     types:
+#       - closed
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Deploy preview
-        uses: rossjrw/pr-preview-action@v1
-        with:
-          umbrella-dir: preview
-          source-dir: dist
-          custom-url: trade-and-investment-factsheets.docs.trade.gov.uk
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Deploy preview
+#         uses: rossjrw/pr-preview-action@v1
+#         with:
+#           umbrella-dir: preview
+#           source-dir: dist
+#           custom-url: trade-and-investment-factsheets.docs.trade.gov.uk
